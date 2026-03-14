@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mestera 3D – Produse Imprimate 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--card2:#1e1e2e;--accent:#ff6b2b;--accent2:#00d4aa;--text:#f0ede8;--muted:#7a7a9a;--border:rgba(255,255,255,0.07);--r:16px;--rs:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+button{font-family:'DM Sans',sans-serif;cursor:pointer}
+input,textarea,select{font-family:'DM Sans',sans-serif}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--surface)}::-webkit-scrollbar-thumb{background:var(--card2);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;backdrop-filter:blur(24px);background:rgba(10,10,15,0.88);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.logo span{color:var(--accent)}
+.logo-hex{width:34px;height:34px;background:var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;animation:spin 10s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.admin-indicator{display:none;align-items:center;gap:.4rem;background:rgba(124,106,255,0.1);border:1px solid rgba(124,106,255,0.25);border-radius:100px;padding:.3rem .8rem;font-size:.72rem;color:#a89fff;font-weight:600;white-space:nowrap}
+.admin-indicator.show{display:flex}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:#a89fff;animation:pulse 2s infinite}
+.btn-admin{background:rgba(124,106,255,0.12);border:1px solid rgba(124,106,255,0.3);color:#a89fff;padding:.45rem .9rem;border-radius:100px;font-size:.8rem;font-weight:600;transition:all .2s}
+.btn-admin:hover{background:rgba(124,106,255,0.25)}
+.btn-logout{background:rgba(229,62,62,0.1);border:1px solid rgba(229,62,62,0.3);color:#fc8181;padding:.45rem .9rem;border-radius:100px;font-size:.8rem;font-weight:600;transition:all .2s;display:none}
+.btn-logout:hover{background:rgba(229,62,62,0.2)}
+.btn-cart{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.5rem 1rem;border-radius:100px;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;transition:border-color .2s}
+.btn-cart:hover{border-color:rgba(255,107,43,0.4)}
+.cart-count{background:var(--accent);color:#fff;width:20px;height:20px;border-radius:50%;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;transition:transform .3s}
+.cart-count.bump{transform:scale(1.5)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:.4rem}
+.hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px}
+.mob-nav{display:none;position:fixed;top:65px;left:0;right:0;background:rgba(10,10,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:1.5rem 5%;z-index:199;flex-direction:column;gap:1rem}
+.mob-nav.open{display:flex}
+.mob-nav a{color:var(--text);text-decoration:none;font-size:1rem;font-weight:500;padding:.5rem 0;border-bottom:1px solid var(--border)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 5% 5rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,107,43,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,43,0.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at 60% 40%,black 20%,transparent 70%)}
+.hero-glow{position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(255,107,43,0.1) 0%,transparent 65%);top:-150px;right:-200px;pointer-events:none}
+.hero-glow2{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,170,0.07) 0%,transparent 65%);bottom:-100px;left:-150px;pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:820px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,107,43,0.1);border:1px solid rgba(255,107,43,0.3);color:var(--accent);font-size:.78rem;font-weight:600;padding:.3rem .85rem;border-radius:100px;margin-bottom:1.8rem;animation:fup .8s ease forwards}
+.bdot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6.5vw,5.5rem);font-weight:800;line-height:1.05;animation:fup .8s .15s ease both}
+h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:500px;margin:1.4rem 0 2.4rem;animation:fup .8s .3s ease both}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fup .8s .45s ease both}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap;animation:fup .8s .6s ease both}
+.sn{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800}
+.sn span{color:var(--accent)}
+.sl{font-size:.78rem;color:var(--muted);font-weight:500}
+@keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* BUTTONS */
+.btn-p{background:var(--accent);color:#fff;padding:.85rem 2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(255,107,43,0.3);display:inline-flex;align-items:center;gap:.4rem}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(255,107,43,0.5)}
+.btn-o{background:transparent;color:var(--text);padding:.85rem 2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:600;font-size:.95rem;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,background .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-o:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+
+/* SECTIONS */
+section{padding:5rem 5%}
+.stag{font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem}
+h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;line-height:1.1}
+.sdesc{color:var(--muted);max-width:520px;margin-top:.7rem;font-size:.95rem}
+.sh{margin-bottom:2.5rem}
+
+/* CATEGORIES */
+#categorii{background:var(--surface)}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.9rem}
+.cat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem 1.2rem;cursor:pointer;text-decoration:none;color:var(--text);transition:transform .3s,border-color .3s;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;position:relative;overflow:hidden}
+.cat-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,43,0.07),transparent);opacity:0;transition:opacity .3s}
+.cat-card:hover{transform:translateY(-4px);border-color:rgba(255,107,43,0.35)}
+.cat-card:hover::after{opacity:1}
+.ci{font-size:2rem}
+.cn{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}
+.cc{font-size:.75rem;color:var(--muted)}
+
+/* PRODUCTS */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.4rem}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.pc:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.pi{width:100%;height:200px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden;background:var(--card2)}
+.pie{transition:transform .4s}
+.pc:hover .pie{transform:scale(1.12) rotate(-5deg)}
+.pb{position:absolute;top:.8rem;left:.8rem;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:100px}
+.pb.sale{background:#e53e3e}
+.pb.newb{background:var(--accent2);color:#0a0a0f}
+.pbd{padding:1.2rem}
+.pn{font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;margin-bottom:.25rem}
+.pm{font-size:.8rem;color:var(--muted);margin-bottom:.6rem}
+.stars{color:#f5c542;font-size:.82rem}
+.pf{display:flex;align-items:center;justify-content:space-between;margin-top:.8rem}
+.pp{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--accent)}
+.addbtn{background:rgba(255,107,43,0.12);border:1px solid rgba(255,107,43,0.3);color:var(--accent);padding:.4rem .95rem;border-radius:100px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.addbtn:hover,.addbtn.added{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* LOGIN MODAL */
+.loverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:800;backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1rem}
+.loverlay.open{display:flex}
+.lmodal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:400px;overflow:hidden;animation:mpop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes mpop{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.lhead{padding:2rem 2rem 1.2rem;text-align:center}
+.llogo{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:1.2rem}
+.lhex{width:44px;height:44px;background:var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff}
+.ltxt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem}
+.ltxt span{color:var(--accent)}
+.ltitle{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:.3rem}
+.lsub{font-size:.82rem;color:var(--muted)}
+.lbody{padding:1.2rem 2rem 2rem}
+.lerr{background:rgba(229,62,62,0.1);border:1px solid rgba(229,62,62,0.3);color:#fc8181;border-radius:8px;padding:.7rem 1rem;font-size:.82rem;margin-bottom:1rem;display:none;animation:fup .2s ease}
+.lerr.show{display:block}
+.lfield{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.lfield label{font-size:.78rem;font-weight:600;color:var(--muted)}
+.lfield input{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:.8rem 1rem;font-size:.9rem;outline:none;transition:border-color .2s;width:100%}
+.lfield input:focus{border-color:rgba(255,107,43,0.5)}
+.pwrap{position:relative}
+.pwrap input{padding-right:2.8rem}
+.ptog{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;padding:.2rem;transition:color .2s;line-height:1}
+.ptog:hover{color:var(--text)}
+.lbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:.9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 0 25px rgba(255,107,43,0.3);margin-top:.4rem}
+.lbtn:hover{transform:translateY(-1px);box-shadow:0 0 40px rgba(255,107,43,0.5)}
+.lbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.lcancel{width:100%;background:none;border:none;color:var(--muted);font-size:.82rem;margin-top:.8rem;cursor:pointer;padding:.4rem;transition:color .2s}
+.lcancel:hover{color:var(--text)}
+.lnote{text-align:center;font-size:.7rem;color:var(--muted);margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
+
+/* ADMIN */
+.aoverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+.aoverlay.open{display:flex}
+.apanel{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:920px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column}
+.ahead{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.ahead h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem}
+.abody{overflow-y:auto;padding:2rem;flex:1}
+.atabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.atab{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:.5rem 1.1rem;border-radius:100px;font-size:.83rem;font-weight:600;cursor:pointer;transition:all .2s}
+.atab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.alist{display:flex;flex-direction:column;gap:.8rem}
+.arow{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.aemoji{font-size:2rem;min-width:40px;text-align:center}
+.ainfo{flex:1;min-width:140px}
+.ainfo input{width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;outline:none;padding:.2rem 0;transition:border-color .2s}
+.ainfo input:focus{border-bottom-color:var(--accent)}
+.ametainput{width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;outline:none;padding:.15rem 0;margin-top:.2rem;transition:border-color .2s}
+.ametainput:focus{border-bottom-color:rgba(255,107,43,0.4)}
+.pwrp{display:flex;align-items:center;gap:.3rem;background:rgba(255,107,43,0.08);border:1px solid rgba(255,107,43,0.2);border-radius:8px;padding:.35rem .7rem}
+.pwrp input{background:transparent;border:none;color:var(--accent);font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;width:70px;outline:none;text-align:right}
+.pwrp span{color:var(--muted);font-size:.8rem}
+.aacts{display:flex;gap:.5rem;flex-shrink:0}
+.ibtn{background:none;border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:8px;font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.ibtn:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
+.ibtn.del:hover{border-color:rgba(229,62,62,0.4);color:#e53e3e}
+.addform{background:var(--card);border:1px solid rgba(255,107,43,0.2);border-radius:var(--r);padding:1.5rem;margin-top:.5rem}
+.addform h4{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1.2rem;font-size:.95rem;color:var(--accent)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.ff{display:flex;flex-direction:column;gap:.4rem}
+.ff label{font-size:.78rem;font-weight:600;color:var(--muted)}
+.ff input,.ff select{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.65rem .9rem;font-size:.88rem;outline:none;transition:border-color .2s;width:100%}
+.ff input:focus,.ff select:focus{border-color:rgba(255,107,43,0.5)}
+.ff select option{background:var(--surface)}
+.egrid{display:grid;grid-template-columns:repeat(8,1fr);gap:.4rem;margin-top:.4rem}
+.eopt{font-size:1.4rem;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all .2s;background:var(--surface)}
+.eopt:hover,.eopt.sel{border-color:var(--accent);background:rgba(255,107,43,0.1)}
+.bsel{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+.bopt{padding:.25rem .7rem;border-radius:100px;font-size:.72rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .2s;opacity:.5}
+.bopt.sel{opacity:1;border-color:rgba(255,255,255,.25)}
+.bgpick{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+.bgsw{width:36px;height:36px;border-radius:8px;cursor:pointer;border:2px solid var(--border);transition:border-color .2s}
+.bgsw.sel{border-color:var(--accent)}
+
+/* CART */
+.coverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:400;backdrop-filter:blur(6px)}
+.coverlay.open{display:block}
+.cdrawer{position:fixed;right:0;top:0;bottom:0;width:420px;max-width:100vw;background:var(--surface);border-left:1px solid var(--border);z-index:401;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.cdrawer.open{transform:translateX(0)}
+.chead{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chead h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+.xbtn{background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.xbtn:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
+.citems{flex:1;overflow-y:auto;padding:1.2rem}
+.cempty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cempty-icon{font-size:3rem;margin-bottom:1rem}
+.citem{display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);margin-bottom:.8rem}
+.citemoji{font-size:2.2rem;min-width:48px;text-align:center}
+.ciinfo{flex:1}
+.ciname{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem}
+.ciprice{color:var(--accent);font-weight:700;font-size:.88rem;margin-top:.1rem}
+.ciqty{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.qbtn{background:var(--surface);border:1px solid var(--border);color:var(--text);width:26px;height:26px;border-radius:6px;font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-weight:700}
+.qbtn:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
+.qval{font-weight:700;font-size:.88rem;min-width:18px;text-align:center}
+.crem{background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;transition:color .2s;flex-shrink:0;padding:.2rem}
+.crem:hover{color:#e53e3e}
+.cfooter{padding:1.2rem 1.5rem;border-top:1px solid var(--border);flex-shrink:0}
+.ctrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.ctlbl{font-size:.9rem;color:var(--muted)}
+.ctval{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--accent)}
+.chkbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:1rem;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(255,107,43,0.3);display:flex;align-items:center;justify-content:center;gap:.5rem}
+.chkbtn:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(255,107,43,0.5)}
+.chkbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.snote{text-align:center;font-size:.72rem;color:var(--muted);margin-top:.8rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
+
+/* CHECKOUT */
+.choverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:600;backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1rem}
+.choverlay.open{display:flex}
+.chmodal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto}
+.chhead{padding:1.5rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:10}
+.chhead h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+.chbody{padding:2rem}
+.chstep{display:none}
+.chstep.active{display:block}
+.chlbl{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.chfield{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
+.chfield label{font-size:.78rem;font-weight:600;color:var(--muted)}
+.chfield input,.chfield select{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.7rem 1rem;font-size:.88rem;outline:none;transition:border-color .2s;width:100%}
+.chfield input:focus,.chfield select:focus{border-color:rgba(255,107,43,0.5)}
+.chfield select option{background:var(--card)}
+.chrow2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.osum{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem;margin-bottom:1rem}
+.osum-t{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:.9rem}
+.oline{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-bottom:.5rem}
+.oline.tot{color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;border-top:1px solid var(--border);padding-top:.7rem;margin-top:.5rem}
+.oline.tot span:last-child{color:var(--accent)}
+.pmrow{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem}
+.pmopt{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:.6rem 1.1rem;cursor:pointer;font-size:.82rem;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.pmopt.sel{border-color:var(--accent);color:var(--accent);background:rgba(255,107,43,0.06)}
+.ibox{background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:10px;padding:1rem;font-size:.82rem;color:var(--muted);margin-bottom:1rem}
+.ibox strong{color:var(--accent2)}
+.chnav{display:flex;gap:.8rem;margin-top:1.5rem}
+.chnav .btn-o{flex:1;justify-content:center;border-radius:12px}
+.chnav .btn-p{flex:2;justify-content:center;border-radius:12px;border:none}
+.sdots{display:flex;align-items:center;gap:.4rem;margin-bottom:2rem}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s}
+.sdot.active{background:var(--accent);width:24px;border-radius:4px}
+.sdot.done{background:var(--accent2)}
+.ssep{flex:1;height:1px;background:var(--border)}
+.sukscreen{text-align:center;padding:2rem 1rem}
+.sukicon{font-size:4rem;margin-bottom:1rem;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.2)}100%{transform:scale(1)}}
+.sukscreen h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:.6rem}
+.sukscreen p{color:var(--muted);font-size:.9rem;max-width:340px;margin:0 auto 2rem}
+
+/* PERKS */
+#avantaje{background:var(--surface)}
+.perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:2.5rem}
+.perk{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.8rem}
+.perkicon{width:48px;height:48px;border-radius:12px;background:rgba(255,107,43,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:.9rem}
+.perktit{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.35rem}
+.perkd{font-size:.85rem;color:var(--muted)}
+
+/* CTA */
+#comanda{text-align:center;background:linear-gradient(135deg,rgba(255,107,43,0.07),rgba(0,212,170,0.05));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ctabtns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+
+/* CONTACT */
+.cgrid{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;margin-top:2.5rem}
+.coni{display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);margin-bottom:.7rem;text-decoration:none;color:var(--text);transition:border-color .2s}
+.coni:hover{border-color:rgba(255,107,43,0.4)}
+.coniico{font-size:1.2rem}
+.conilbl{font-size:.72rem;color:var(--muted)}
+.coniv{font-weight:600;font-size:.88rem}
+.cf{display:flex;flex-direction:column;gap:.9rem}
+.cf .ff input,.cf .ff textarea{background:var(--card)}
+
+/* FOOTER */
+footer{padding:2.5rem 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.flogo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+.flogo span{color:var(--accent)}
+footer p{font-size:.78rem;color:var(--muted)}
+.flinks{display:flex;gap:1.5rem;flex-wrap:wrap}
+.flinks a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--text)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card2);border:1px solid var(--border);color:var(--text);padding:.85rem 1.5rem;border-radius:12px;font-weight:600;font-size:.88rem;opacity:0;transition:all .3s;z-index:9998;white-space:nowrap;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* BG COLOURS */
+.bg1{background:linear-gradient(135deg,#1a1230,#0e0e1a)}
+.bg2{background:linear-gradient(135deg,#12201a,#0a0f0e)}
+.bg3{background:linear-gradient(135deg,#1a1208,#0f0e0a)}
+.bg4{background:linear-gradient(135deg,#1a0f12,#0f0a0a)}
+.bg5{background:linear-gradient(135deg,#0f1a1a,#0a0e0f)}
+.bg6{background:linear-gradient(135deg,#1a1218,#0f0a0f)}
+
+/* RESPONSIVE */
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}.cgrid{grid-template-columns:1fr;gap:2rem}}
+@media(max-width:600px){section{padding:4rem 4%}.hero{padding:7rem 4% 4rem}.hero-stats{gap:1.8rem}.frow{grid-template-columns:1fr}.chrow2{grid-template-columns:1fr}.pg{grid-template-columns:1fr}.cdrawer{width:100vw}.chnav{flex-direction:column}.chnav .btn-p,.chnav .btn-o{flex:none;width:100%}nav{padding:.9rem 4%}footer{flex-direction:column;text-align:center}.flinks{justify-content:center}.admin-indicator{display:none!important}}
+@media(max-width:400px){h1{font-size:2.4rem}.hero-stats{flex-direction:column;gap:1rem}.cat-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo"><div class="logo-hex">M</div>Mestera <span>3D</span></a>
+  <ul class="nav-links">
+    <li><a href="#produse">Produse</a></li>
+    <li><a href="#categorii">Categorii</a></li>
+    <li><a href="#avantaje">De ce noi?</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="admin-indicator" id="adminInd"><div class="ai-dot"></div>Admin activ</div>
+    <button class="btn-admin" id="adminBtn" onclick="handleAdminClick()">⚙️ Admin</button>
+    <button class="btn-logout" id="logoutBtn" onclick="handleLogout()">↩ Ieși</button>
+    <button class="btn-cart" onclick="openCart()">🛒 Coș <span class="cart-count" id="cartCount">0</span></button>
+    <button class="hamburger" onclick="toggleMNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mNav">
+  <a href="#produse" onclick="closeMNav()">Produse</a>
+  <a href="#categorii" onclick="closeMNav()">Categorii</a>
+  <a href="#avantaje" onclick="closeMNav()">De ce noi?</a>
+  <a href="#contact" onclick="closeMNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="bdot"></div>Imprimare 3D profesională · România</div>
+    <h1>Design unic,<br>printat <em>la comanda ta</em></h1>
+    <p class="hero-sub">Transformăm ideile tale în obiecte reale. Produse imprimate 3D — decorațiuni, piese tehnice, jucării și multe altele.</p>
+    <div class="hero-actions">
+      <button class="btn-p" onclick="goTo('#produse')">Explorează produsele →</button>
+      <button class="btn-o" onclick="goTo('#contact')">Comandă personalizat</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="sn">200<span>+</span></div><div class="sl">Produse</div></div>
+      <div><div class="sn">48<span>h</span></div><div class="sl">Livrare rapidă</div></div>
+      <div><div class="sn">4.9<span>★</span></div><div class="sl">Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORII -->
+<section id="categorii">
+  <div class="sh"><div class="stag">Ce oferim</div><h2>Categorii de produse</h2><p class="sdesc">De la decorațiuni la piese funcționale — orice poate fi printat.</p></div>
+  <div class="cat-grid" id="catGrid"></div>
+</section>
+
+<!-- PRODUSE -->
+<section id="produse">
+  <div class="ph"><div><div class="stag">Bestsellers</div><h2>Produsele noastre</h2></div></div>
+  <div class="pg" id="prodGrid"></div>
+</section>
+
+<!-- AVANTAJE -->
+<section id="avantaje">
+  <div class="sh"><div class="stag">De ce Mestera 3D</div><h2>Calitate pe care o poți atinge</h2></div>
+  <div class="perks">
+    <div class="perk"><div class="perkicon">⚡</div><div class="perktit">Livrare în 24–48h</div><div class="perkd">Procesăm rapid și expediem prin curier în toată România.</div></div>
+    <div class="perk"><div class="perkicon">🎨</div><div class="perktit">Personalizare completă</div><div class="perkd">Culori, materiale, dimensiuni — adaptăm orice produs exact cum vrei.</div></div>
+    <div class="perk"><div class="perkicon">🌱</div><div class="perktit">Materiale eco</div><div class="perkd">Filament PLA biodegradabil — bun pentru tine și pentru natură.</div></div>
+    <div class="perk"><div class="perkicon">🔒</div><div class="perktit">Garanție 30 de zile</div><div class="perkd">Dacă produsul nu e conform, îl înlocuim gratuit fără discuții.</div></div>
+    <div class="perk"><div class="perkicon">🇷🇴</div><div class="perktit">100% Made in Romania</div><div class="perkd">Printat, verificat și ambalat manual în atelierul nostru.</div></div>
+    <div class="perk"><div class="perkicon">💬</div><div class="perktit">Suport rapid</div><div class="perkd">Răspundem în max 2 ore pe WhatsApp sau email.</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="comanda">
+  <div class="stag">Gata să comanzi?</div>
+  <h2>Aduce-ți ideea la viață</h2>
+  <p class="sdesc" style="margin:0 auto .5rem;text-align:center">Fie că ai un design sau doar o idee — suntem aici să te ajutăm.</p>
+  <div class="ctabtns">
+    <button class="btn-p" onclick="goTo('#produse')">Cumpără acum →</button>
+    <button class="btn-o" onclick="goTo('#contact')">Comandă personalizată</button>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sh"><div class="stag">Hai să vorbim</div><h2>Contactează-ne</h2><p class="sdesc">Întrebare sau comandă specială? Suntem disponibili!</p></div>
+  <div class="cgrid">
+    <div>
+      <a href="mailto:contact@mestera3d.ro" class="coni"><div class="coniico">📧</div><div><div class="conilbl">Email</div><div class="coniv">contact@mestera3d.ro</div></div></a>
+      <a href="tel:+40700000000" class="coni"><div class="coniico">📞</div><div><div class="conilbl">Telefon / WhatsApp</div><div class="coniv">+40 700 000 000</div></div></a>
+      <div class="coni"><div class="coniico">📍</div><div><div class="conilbl">Locație</div><div class="coniv">România</div></div></div>
+      <div class="coni"><div class="coniico">⏰</div><div><div class="conilbl">Program</div><div class="coniv">Lun–Vin: 9:00 – 18:00</div></div></div>
+    </div>
+    <div class="cf">
+      <div class="ff"><label>Numele tău</label><input type="text" placeholder="Ion Popescu"></div>
+      <div class="ff"><label>Email</label><input type="email" placeholder="ion@email.com"></div>
+      <div class="ff"><label>Telefon (opțional)</label><input type="tel" placeholder="+40 7XX XXX XXX"></div>
+      <div class="ff"><label>Mesajul tău</label><textarea rows="4" placeholder="Descrie produsul dorit..."></textarea></div>
+      <button class="btn-p" style="border:none;width:100%;justify-content:center" onclick="submitContact()">Trimite mesajul →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><div class="flogo">Mestera <span>3D</span></div><p style="margin-top:.3rem">Imprimare 3D profesională · Made in Romania</p></div>
+  <div class="flinks"><a href="#">Confidențialitate</a><a href="#">Termeni</a><a href="#">GDPR</a><a href="#contact">Contact</a></div>
+  <p>© 2025 Mestera 3D. Toate drepturile rezervate.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- ══ LOGIN MODAL ══ -->
+<div class="loverlay" id="loginOverlay" onclick="if(event.target===this)closeLogin()">
+  <div class="lmodal">
+    <div class="lhead">
+      <div class="llogo">
+        <div class="lhex">M</div>
+        <span class="ltxt">Mestera <span>3D</span></span>
+      </div>
+      <div class="ltitle">Panou de administrare</div>
+      <div class="lsub">Autentifică-te pentru a accesa panoul admin</div>
+    </div>
+    <div class="lbody">
+      <div class="lerr" id="loginErr">❌ Email sau parolă incorectă.</div>
+      <div class="lfield">
+        <label>Adresă email</label>
+        <input type="email" id="lEmail" placeholder="admin@mestera3d.ro" autocomplete="email" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="lfield">
+        <label>Parolă</label>
+        <div class="pwrap">
+          <input type="password" id="lPass" placeholder="••••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+          <button class="ptog" id="ptog" onclick="togglePassVis()" type="button">👁</button>
+        </div>
+      </div>
+      <button class="lbtn" id="lBtn" onclick="doLogin()">🔐 Autentifică-te</button>
+      <button class="lcancel" onclick="closeLogin()">Anulează</button>
+      <div class="lnote">🔒 Acces restricționat · Mestera 3D Admin</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN OVERLAY ══ -->
+<div class="aoverlay" id="adminOverlay">
+  <div class="apanel">
+    <div class="ahead">
+      <h3>⚙️ Panou Admin — Mestera 3D</h3>
+      <button class="xbtn" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="abody">
+      <div class="atabs">
+        <button class="atab active" onclick="atab('products',this)">📦 Produse existente</button>
+        <button class="atab" onclick="atab('add',this)">➕ Adaugă produs</button>
+        <button class="atab" onclick="atab('cats',this)">🏷️ Categorii</button>
+      </div>
+      <div id="tab-products"><div class="alist" id="adminList"></div></div>
+      <div id="tab-add" style="display:none">
+        <div class="addform">
+          <h4>Produs nou</h4>
+          <div class="frow">
+            <div class="ff"><label>Numele produsului *</label><input type="text" id="nName" placeholder="ex: Vază geometrică"></div>
+            <div class="ff"><label>Preț (RON) *</label><input type="number" id="nPrice" placeholder="79" min="1"></div>
+          </div>
+          <div class="frow">
+            <div class="ff"><label>Material / Detalii</label><input type="text" id="nMeta" placeholder="ex: PLA mată albă · 18cm"></div>
+            <div class="ff"><label>Categorie</label><select id="nCat"></select></div>
+          </div>
+          <div class="frow">
+            <div class="ff"><label>Stele (1–5)</label><input type="number" id="nStars" min="1" max="5" value="5"></div>
+            <div class="ff"><label>Nr. recenzii</label><input type="number" id="nRev" min="0" value="0"></div>
+          </div>
+          <div class="ff" style="margin-bottom:1rem">
+            <label>Badge</label>
+            <div class="bsel" id="badgeSel">
+              <span class="bopt sel" style="background:rgba(100,100,100,0.15);color:var(--muted)" data-v="" onclick="pickBadge(this,'')">Fără</span>
+              <span class="bopt" style="background:rgba(255,107,43,0.15);color:var(--accent)" data-v="NOU" onclick="pickBadge(this,'NOU')">NOU</span>
+              <span class="bopt" style="background:rgba(229,62,62,0.15);color:#e53e3e" data-v="PROMO" onclick="pickBadge(this,'PROMO')">PROMO</span>
+              <span class="bopt" style="background:rgba(0,212,170,0.15);color:var(--accent2)" data-v="TOP" onclick="pickBadge(this,'TOP')">TOP</span>
+            </div>
+          </div>
+          <div class="ff" style="margin-bottom:1rem"><label>Emoji produs</label><div class="egrid" id="emojiGrid"></div></div>
+          <div class="ff" style="margin-bottom:1.2rem"><label>Culoare card</label><div class="bgpick" id="bgPick"></div></div>
+          <button class="btn-p" style="border:none" onclick="addProduct()">➕ Adaugă produsul</button>
+        </div>
+      </div>
+      <div id="tab-cats" style="display:none"><div id="catAdminList"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CART DRAWER ══ -->
+<div class="coverlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cdrawer" id="cartDrawer">
+  <div class="chead"><h3>🛒 Coșul tău</h3><button class="xbtn" onclick="closeCart()">✕</button></div>
+  <div class="citems" id="cartItems"></div>
+  <div class="cfooter">
+    <div class="ctrow"><span class="ctlbl">Total</span><span class="ctval" id="cartTotal">0 RON</span></div>
+    <button class="chkbtn" id="chkBtn" onclick="openCheckout()" disabled>💳 Finalizează comanda</button>
+    <div class="snote">🔒 Plată securizată Stripe · SSL 256-bit</div>
+  </div>
+</div>
+
+<!-- ══ CHECKOUT MODAL ══ -->
+<div class="choverlay" id="chOverlay">
+  <div class="chmodal">
+    <div class="chhead"><h3>💳 Finalizare comandă</h3><button class="xbtn" onclick="closeCheckout()">✕</button></div>
+    <div class="chbody">
+      <div class="sdots">
+        <div class="sdot active" id="sd0"></div><div class="ssep"></div>
+        <div class="sdot" id="sd1"></div><div class="ssep"></div>
+        <div class="sdot" id="sd2"></div>
+      </div>
+      <!-- Step 0 -->
+      <div class="chstep active" id="chs0">
+        <div class="chlbl">📦 Date de livrare</div>
+        <div class="chrow2"><div class="chfield"><label>Prenume *</label><input type="text" id="g0" placeholder="Ion"></div><div class="chfield"><label>Nume *</label><input type="text" id="g1" placeholder="Popescu"></div></div>
+        <div class="chfield"><label>Email *</label><input type="email" id="g2" placeholder="ion@email.com"></div>
+        <div class="chfield"><label>Telefon *</label><input type="tel" id="g3" placeholder="+40 7XX XXX XXX"></div>
+        <div class="chfield"><label>Adresa *</label><input type="text" id="g4" placeholder="Str. Exemplu nr. 1, ap. 2"></div>
+        <div class="chrow2"><div class="chfield"><label>Oraș *</label><input type="text" id="g5" placeholder="București"></div><div class="chfield"><label>Județ</label><input type="text" id="g6" placeholder="Ilfov"></div></div>
+        <div class="chfield"><label>Livrare</label>
+          <select id="g7"><option value="15">Curier standard (2–3 zile) — 15 RON</option><option value="25">Curier express (24h) — 25 RON</option><option value="0">Ridicare din atelier — Gratuit</option></select>
+        </div>
+        <div class="chnav"><button class="btn-o" onclick="closeCheckout()">← Înapoi</button><button class="btn-p" onclick="chGoStep(1)">Continuă la plată →</button></div>
+      </div>
+      <!-- Step 1 -->
+      <div class="chstep" id="chs1">
+        <div id="oSummary" class="osum"></div>
+        <div class="chlbl">💳 Metodă de plată</div>
+        <div class="pmrow">
+          <div class="pmopt sel" onclick="setPM(this,'card')">💳 Card bancar</div>
+          <div class="pmopt" onclick="setPM(this,'ramburs')">💵 Ramburs</div>
+          <div class="pmopt" onclick="setPM(this,'transfer')">🏦 Transfer</div>
+        </div>
+        <div id="pmCard">
+          <div class="ibox">🔒 <strong>Plată securizată Stripe</strong> — Visa, Mastercard, Amex. Datele cardului nu sunt stocate la noi.</div>
+          <div class="chlbl">Date card</div>
+          <div class="chfield"><label>Număr card</label><input type="text" id="cc1" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"></div>
+          <div class="chrow2"><div class="chfield"><label>Expiră (LL/AA)</label><input type="text" id="cc2" placeholder="12/26" maxlength="5" oninput="fmtExp(this)"></div><div class="chfield"><label>CVV</label><input type="text" id="cc3" placeholder="123" maxlength="4"></div></div>
+          <div class="chfield"><label>Nume pe card</label><input type="text" id="cc4" placeholder="ION POPESCU"></div>
+        </div>
+        <div id="pmRamburs" style="display:none"><div class="ibox">💵 <strong>Ramburs la livrare</strong> — Plătești la sosirea coletului. Poate apărea o taxă suplimentară de la curier (5–8 RON).</div></div>
+        <div id="pmTransfer" style="display:none"><div class="ibox">🏦 <strong>Transfer bancar</strong> — Datele contului îți vor fi trimise pe email. Comanda se procesează după confirmare (1–2 zile).</div></div>
+        <div class="chnav"><button class="btn-o" onclick="chGoStep(0)">← Înapoi</button><button class="btn-p" id="payBtn" onclick="processPayment()">🔒 Plasează comanda</button></div>
+      </div>
+      <!-- Step 2 -->
+      <div class="chstep" id="chs2">
+        <div class="sukscreen">
+          <div class="sukicon">🎉</div>
+          <h3>Comandă plasată cu succes!</h3>
+          <p id="sukMsg">Vei primi confirmarea pe email în câteva minute. Pregătim comanda ta!</p>
+          <button class="btn-p" style="border:none;margin:0 auto" onclick="closeCheckout();clearCart()">← Înapoi la magazin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════
+   AUTH — parola stocată ca SHA-256
+   (nu apare în clar în cod)
+════════════════════════════ */
+const ADMIN_EMAIL = 'theoladunca@gmail.com';
+const ADMIN_HASH  = '7c98ffaa5719ad5f08c443a8736be7c1fcdf3d809c7e07959fba7e4cb3f6fb9b';
+const SKEY = 'm3d_s';
+
+let isAdmin = false;
+
+async function sha256(s){
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function checkSession(){
+  try{ if(sessionStorage.getItem(SKEY)===ADMIN_HASH){ setAdminUI(true); return; } }catch(e){}
+  setAdminUI(false);
+}
+
+function setAdminUI(v){
+  isAdmin = v;
+  document.getElementById('adminInd').classList.toggle('show', v);
+  document.getElementById('logoutBtn').style.display = v ? 'block' : 'none';
+}
+
+function handleAdminClick(){
+  if(isAdmin) openAdmin();
+  else openLogin();
+}
+
+function handleLogout(){
+  try{ sessionStorage.removeItem(SKEY); }catch(e){}
+  isAdmin = false;
+  setAdminUI(false);
+  showToast('✓ Te-ai deconectat cu succes.');
+}
+
+/* LOGIN */
+function openLogin(){
+  document.getElementById('lEmail').value='';
+  document.getElementById('lPass').value='';
+  document.getElementById('loginErr').classList.remove('show');
+  document.getElementById('loginOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('lEmail').focus(),350);
+}
+function closeLogin(){ document.getElementById('loginOverlay').classList.remove('open'); }
+
+async function doLogin(){
+  const email = document.getElementById('lEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('lPass').value;
+  const btn   = document.getElementById('lBtn');
+  const err   = document.getElementById('loginErr');
+
+  if(!email||!pass){ err.textContent='⚠️ Completează emailul și parola.'; err.classList.add('show'); return; }
+
+  btn.disabled=true; btn.textContent='⏳ Se verifică...';
+  err.classList.remove('show');
+
+  await new Promise(r=>setTimeout(r,700)); // anti brute-force delay
+
+  const h = await sha256(pass);
+
+  if(email===ADMIN_EMAIL && h===ADMIN_HASH){
+    try{ sessionStorage.setItem(SKEY, ADMIN_HASH); }catch(e){}
+    closeLogin();
+    setAdminUI(true);
+    btn.disabled=false; btn.textContent='🔐 Autentifică-te';
+    showToast('✓ Bine ai venit în panoul admin!');
+    setTimeout(()=>openAdmin(), 400);
+  } else {
+    err.textContent='❌ Email sau parolă incorectă.';
+    err.classList.add('show');
+    btn.disabled=false; btn.textContent='🔐 Autentifică-te';
+    document.getElementById('lPass').value='';
+    document.getElementById('lPass').focus();
+  }
+}
+
+function togglePassVis(){
+  const i=document.getElementById('lPass'), b=document.getElementById('ptog');
+  if(i.type==='password'){i.type='text';b.textContent='🙈';}
+  else{i.type='password';b.textContent='👁';}
+}
+
+/* ════════════════════════════
+   DATA
+════════════════════════════ */
+const EMOJIS=['🏺','🐉','🔑','🌿','💡','🎯','🎮','🔧','💍','📦','🦁','🚀','⚙️','🌸','🏆','🎨','🦋','🌙','⭐','🔮','🦊','🐙','🌊','🎲'];
+const BGS=[{c:'bg1',col:'#1a1230'},{c:'bg2',col:'#12201a'},{c:'bg3',col:'#1a1208'},{c:'bg4',col:'#1a0f12'},{c:'bg5',col:'#0f1a1a'},{c:'bg6',col:'#1a1218'}];
+
+let selE='🏺', selBg='bg1', selBadge='', curPM='card', curStep=0;
+
+let products=[
+  {id:1,name:'Vază geometrică Voronoi',meta:'PLA mată albă • 18cm înălțime',price:79,stars:5,reviews:24,badge:'NOU',emoji:'🏺',bg:'bg1',cat:'Decorațiuni'},
+  {id:2,name:'Dragon articulat imprimat',meta:'PLA+ multicolor • 25cm lungime',price:120,stars:5,reviews:47,badge:'TOP',emoji:'🐉',bg:'bg2',cat:'Jucării & Jocuri'},
+  {id:3,name:'Organizator chei de perete',meta:'PETG negru mat • 5 cârlige',price:45,stars:4,reviews:18,badge:'',emoji:'🔑',bg:'bg3',cat:'Organizatoare'},
+  {id:4,name:'Ghiveci modular suculente',meta:'PLA verde • Set 3 buc',price:65,stars:5,reviews:31,badge:'',emoji:'🌿',bg:'bg4',cat:'Decorațiuni'},
+  {id:5,name:'Abajur Voronoi lampă birou',meta:'PLA translucid alb • E27',price:95,stars:5,reviews:12,badge:'PROMO',emoji:'💡',bg:'bg5',cat:'Decorațiuni'},
+  {id:6,name:'Personalizat la cerere',meta:'Orice material • Orice formă',price:30,stars:5,reviews:0,badge:'',emoji:'🎯',bg:'bg6',cat:'Personalizate'},
+];
+
+let categories=[
+  {name:'Decorațiuni',icon:'🏠'},{name:'Piese tehnice',icon:'🔧'},
+  {name:'Jucării & Jocuri',icon:'🎮'},{name:'Bijuterii',icon:'💍'},
+  {name:'Organizatoare',icon:'📦'},{name:'Personalizate',icon:'✏️'},
+];
+
+let cart=[];
+
+/* ════════════════════════════
+   RENDER
+════════════════════════════ */
+function renderProducts(){
+  document.getElementById('prodGrid').innerHTML=products.map(p=>`
+    <div class="pc">
+      <div class="pi ${p.bg}">
+        <span class="pie">${p.emoji}</span>
+        ${p.badge?`<span class="pb ${p.badge==='PROMO'?'sale':p.badge==='NOU'?'newb':''}">${p.badge}</span>`:''}
+      </div>
+      <div class="pbd">
+        <div class="pn">${p.name}</div>
+        <div class="pm">${p.meta}</div>
+        <div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)} <span style="color:var(--muted);font-size:.75rem">${p.reviews>0?'('+p.reviews+')':'Nou'}</span></div>
+        <div class="pf">
+          <span class="pp">${p.price} RON</span>
+          <button class="addbtn" id="ab${p.id}" onclick="addToCart(${p.id})">+ Adaugă</button>
+        </div>
+      </div>
+    </div>`).join('');
+  scrollReveal();
+}
+
+function renderCategories(){
+  document.getElementById('catGrid').innerHTML=categories.map(c=>{
+    const n=products.filter(p=>p.cat===c.name).length;
+    return `<a href="#produse" class="cat-card">
+      <div class="ci">${c.icon}</div>
+      <div class="cn">${c.name}</div>
+      <div class="cc">${n} produ${n===1?'s':'se'}</div>
+    </a>`;
+  }).join('');
+}
+
+/* ════════════════════════════
+   CART
+════════════════════════════ */
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  const ex=cart.find(x=>x.id===id);
+  if(ex) ex.qty++; else cart.push({...p,qty:1});
+  updateCart();
+  const b=document.getElementById('ab'+id);
+  if(b){b.textContent='✓ Adăugat';b.classList.add('added');setTimeout(()=>{b.textContent='+ Adaugă';b.classList.remove('added')},1500);}
+  const cc=document.getElementById('cartCount');
+  cc.classList.add('bump');setTimeout(()=>cc.classList.remove('bump'),300);
+  showToast('✓ "'+p.name+'" adăugat în coș!');
+}
+
+function changeQty(id,d){
+  const it=cart.find(x=>x.id===id);
+  if(!it)return;
+  it.qty+=d;
+  if(it.qty<=0) cart=cart.filter(x=>x.id!==id);
+  updateCart();
+}
+
+function removeFromCart(id){cart=cart.filter(x=>x.id!==id);updateCart();}
+function clearCart(){cart=[];updateCart();}
+
+function updateCart(){
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cartTotal').textContent=total+' RON';
+  document.getElementById('chkBtn').disabled=cart.length===0;
+  const el=document.getElementById('cartItems');
+  if(!cart.length){
+    el.innerHTML='<div class="cempty"><div class="cempty-icon">🛒</div><div>Coșul tău este gol.</div><div style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Adaugă produse pentru a continua.</div></div>';
+    return;
+  }
+  el.innerHTML=cart.map(it=>`
+    <div class="citem">
+      <div class="citemoji">${it.emoji}</div>
+      <div class="ciinfo">
+        <div class="ciname">${it.name}</div>
+        <div class="ciprice">${it.price*it.qty} RON</div>
+        <div class="ciqty">
+          <button class="qbtn" onclick="changeQty(${it.id},-1)">−</button>
+          <span class="qval">${it.qty}</span>
+          <button class="qbtn" onclick="changeQty(${it.id},1)">+</button>
+        </div>
+      </div>
+      <button class="crem" onclick="removeFromCart(${it.id})">🗑️</button>
+    </div>`).join('');
+}
+
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open');}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open');}
+
+/* ════════════════════════════
+   CHECKOUT
+════════════════════════════ */
+function openCheckout(){
+  if(!cart.length)return;
+  closeCart();curStep=0;updateStepUI();
+  document.getElementById('chOverlay').classList.add('open');
+}
+function closeCheckout(){document.getElementById('chOverlay').classList.remove('open');}
+
+function chGoStep(n){
+  if(n===1){
+    const ids=['g0','g1','g2','g3','g4','g5'];
+    if(ids.some(id=>!document.getElementById(id).value.trim())){showToast('⚠️ Completează toate câmpurile obligatorii!');return;}
+    if(!document.getElementById('g2').value.includes('@')){showToast('⚠️ Email invalid');return;}
+    buildSummary();
+  }
+  curStep=n;updateStepUI();
+}
+
+function updateStepUI(){
+  for(let i=0;i<3;i++){
+    document.getElementById('chs'+i).classList.toggle('active',i===curStep);
+    const d=document.getElementById('sd'+i);
+    d.className='sdot';
+    if(i===curStep)d.classList.add('active');
+    else if(i<curStep)d.classList.add('done');
+  }
+}
+
+function buildSummary(){
+  const ship=parseInt(document.getElementById('g7').value)||0;
+  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('oSummary').innerHTML=`
+    <div class="osum-t">Rezumat comandă</div>
+    ${cart.map(i=>`<div class="oline"><span>${i.emoji} ${i.name} × ${i.qty}</span><span>${i.price*i.qty} RON</span></div>`).join('')}
+    <div class="oline"><span>Transport</span><span>${ship===0?'Gratuit':ship+' RON'}</span></div>
+    <div class="oline tot"><span>Total de plată</span><span>${sub+ship} RON</span></div>`;
+}
+
+function setPM(el,pm){
+  curPM=pm;
+  document.querySelectorAll('.pmopt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('pmCard').style.display=pm==='card'?'block':'none';
+  document.getElementById('pmRamburs').style.display=pm==='ramburs'?'block':'none';
+  document.getElementById('pmTransfer').style.display=pm==='transfer'?'block':'none';
+}
+
+function processPayment(){
+  if(curPM==='card'){
+    const n=document.getElementById('cc1').value.replace(/\s/g,'');
+    const e=document.getElementById('cc2').value;
+    const c=document.getElementById('cc3').value;
+    const nm=document.getElementById('cc4').value;
+    if(n.length<13||e.length<4||c.length<3||!nm.trim()){showToast('⚠️ Completează datele cardului!');return;}
+  }
+  const btn=document.getElementById('payBtn');
+  btn.disabled=true; btn.textContent='⏳ Se procesează...';
+  setTimeout(()=>{
+    btn.disabled=false; btn.textContent='🔒 Plasează comanda';
+    const email=document.getElementById('g2').value;
+    const name=document.getElementById('g0').value;
+    document.getElementById('sukMsg').textContent='Mulțumim, '+name+'! Confirmarea a fost trimisă la '+email+'. Comanda va fi pregătită în 24–48h.';
+    curStep=2; updateStepUI();
+  },2000);
+}
+
+function fmtCard(i){i.value=i.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim().slice(0,19);}
+function fmtExp(i){let v=i.value.replace(/\D/g,'');if(v.length>=3)v=v.slice(0,2)+'/'+v.slice(2,4);i.value=v;}
+
+/* ════════════════════════════
+   ADMIN
+════════════════════════════ */
+function openAdmin(){
+  if(!isAdmin){ openLogin(); return; }
+  buildEmojiGrid(); buildBgPick(); buildCatSelect();
+  renderAdminList(); renderAdminCats();
+  document.getElementById('adminOverlay').classList.add('open');
+}
+function closeAdmin(){
+  document.getElementById('adminOverlay').classList.remove('open');
+  renderProducts(); renderCategories();
+}
+
+function atab(tab,btn){
+  document.querySelectorAll('.atab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['products','add','cats'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===tab?'block':'none';
+  });
+}
+
+function renderAdminList(){
+  document.getElementById('adminList').innerHTML=products.map(p=>`
+    <div class="arow">
+      <div class="aemoji">${p.emoji}</div>
+      <div class="ainfo">
+        <input value="${p.name}" onchange="updP(${p.id},'name',this.value)">
+        <input class="ametainput" value="${p.meta}" onchange="updP(${p.id},'meta',this.value)">
+      </div>
+      <div class="pwrp">
+        <input type="number" value="${p.price}" onchange="updP(${p.id},'price',+this.value)" min="1">
+        <span>RON</span>
+      </div>
+      <div class="aacts">
+        <button class="ibtn" onclick="cycBadge(${p.id})" title="Badge: ${p.badge||'fără'}">🏷️</button>
+        <button class="ibtn del" onclick="delP(${p.id})" title="Șterge">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+
+function updP(id,k,v){const p=products.find(x=>x.id===id);if(p)p[k]=v;}
+function cycBadge(id){
+  const p=products.find(x=>x.id===id);if(!p)return;
+  const bs=['','NOU','TOP','PROMO'];
+  p.badge=bs[(bs.indexOf(p.badge)+1)%bs.length];
+  renderAdminList(); showToast('Badge: '+(p.badge||'Fără'));
+}
+function delP(id){
+  if(!confirm('Ștergi produsul?'))return;
+  products=products.filter(x=>x.id!==id);
+  renderAdminList(); showToast('Produs șters.');
+}
+
+function renderAdminCats(){
+  document.getElementById('catAdminList').innerHTML=`
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem">Redenumește sau adaugă categorii:</p>
+    ${categories.map((c,i)=>`
+      <div class="arow">
+        <div class="aemoji">${c.icon}</div>
+        <div class="ainfo"><input value="${c.name}" onchange="categories[${i}].name=this.value"></div>
+        <input value="${c.icon}" onchange="categories[${i}].icon=this.value" style="background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.4rem .7rem;width:58px;font-size:1.3rem;text-align:center;outline:none">
+      </div>`).join('')}
+    <button class="btn-o" style="margin-top:1rem;border-radius:12px" onclick="categories.push({name:'Categorie nouă',icon:'📁'});renderAdminCats()">+ Adaugă categorie</button>`;
+}
+
+function buildCatSelect(){
+  document.getElementById('nCat').innerHTML=categories.map(c=>`<option>${c.name}</option>`).join('');
+}
+
+function buildEmojiGrid(){
+  document.getElementById('emojiGrid').innerHTML=EMOJIS.map(e=>`
+    <div class="eopt ${e===selE?'sel':''}" onclick="pickE(this,'${e}')">${e}</div>`).join('');
+}
+function pickE(el,e){selE=e;document.querySelectorAll('.eopt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
+
+function buildBgPick(){
+  document.getElementById('bgPick').innerHTML=BGS.map(b=>`
+    <div class="bgsw ${b.c===selBg?'sel':''}" style="background:${b.col}" onclick="pickBg(this,'${b.c}')"></div>`).join('');
+}
+function pickBg(el,b){selBg=b;document.querySelectorAll('.bgsw').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
+
+function pickBadge(el,v){
+  selBadge=v;
+  document.querySelectorAll('.bopt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function addProduct(){
+  const name=document.getElementById('nName').value.trim();
+  const price=+document.getElementById('nPrice').value;
+  if(!name||!price){showToast('⚠️ Completează numele și prețul!');return;}
+  const meta=document.getElementById('nMeta').value.trim();
+  const cat=document.getElementById('nCat').value;
+  const stars=Math.min(5,Math.max(1,+document.getElementById('nStars').value||5));
+  const reviews=+document.getElementById('nRev').value||0;
+  products.push({id:Date.now(),name,meta,price,stars,reviews,badge:selBadge,emoji:selE,bg:selBg,cat});
+  document.getElementById('nName').value='';
+  document.getElementById('nPrice').value='';
+  document.getElementById('nMeta').value='';
+  showToast('✓ "'+name+'" adăugat!');
+  const firstTab=document.querySelectorAll('.atab')[0];
+  atab('products',firstTab);
+  renderAdminList();
+}
+
+/* ════════════════════════════
+   UTILS
+════════════════════════════ */
+function goTo(s){document.querySelector(s)?.scrollIntoView({behavior:'smooth'});}
+function toggleMNav(){document.getElementById('mNav').classList.toggle('open');}
+function closeMNav(){document.getElementById('mNav').classList.remove('open');}
+function submitContact(){showToast('✓ Mesajul a fost trimis! Te contactăm în curând.');}
+
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+function scrollReveal(){
+  const obs=new IntersectionObserver(en=>{
+    en.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
+  },{threshold:.08});
+  document.querySelectorAll('.pc,.cat-card,.perk').forEach(el=>{
+    el.style.opacity='0';el.style.transform='translateY(28px)';
+    el.style.transition='opacity .55s ease,transform .55s ease';
+    obs.observe(el);
+  });
+}
+
+/* INIT */
+renderProducts();
+renderCategories();
+updateCart();
+checkSession();
+</script>
+</body>
+</html>
