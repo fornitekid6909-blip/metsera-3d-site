@@ -6,7 +6,7 @@
 <title>Mestera 3D – Produse Imprimate 3D</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--card2:#1e1e2e;--accent:#ff6b2b;--accent2:#00d4aa;--text:#f0ede8;--muted:#7a7a9a;--border:rgba(255,255,255,0.07);--r:16px;--rs:10px}
+:root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--card2:#1e1e2e;--accent:#ff6b2b;--accent2:#00d4aa;--purple:#7c6aff;--text:#f0ede8;--muted:#7a7a9a;--border:rgba(255,255,255,0.07);--r:16px;--rs:10px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
@@ -15,8 +15,8 @@ button{font-family:'DM Sans',sans-serif;cursor:pointer}
 input,textarea,select{font-family:'DM Sans',sans-serif}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--surface)}::-webkit-scrollbar-thumb{background:var(--card2);border-radius:3px}
 
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;backdrop-filter:blur(24px);background:rgba(10,10,15,0.88);border-bottom:1px solid var(--border)}
+/* ── NAV ── */
+nav{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;backdrop-filter:blur(24px);background:rgba(10,10,15,0.9);border-bottom:1px solid var(--border)}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:.5rem}
 .logo span{color:var(--accent)}
 .logo-hex{width:34px;height:34px;background:var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;animation:spin 10s linear infinite;flex-shrink:0}
@@ -25,13 +25,16 @@ nav{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
 .nav-right{display:flex;align-items:center;gap:.7rem}
-.admin-indicator{display:none;align-items:center;gap:.4rem;background:rgba(124,106,255,0.1);border:1px solid rgba(124,106,255,0.25);border-radius:100px;padding:.3rem .8rem;font-size:.72rem;color:#a89fff;font-weight:600;white-space:nowrap}
-.admin-indicator.show{display:flex}
-.ai-dot{width:6px;height:6px;border-radius:50%;background:#a89fff;animation:pulse 2s infinite}
-.btn-admin{background:rgba(124,106,255,0.12);border:1px solid rgba(124,106,255,0.3);color:#a89fff;padding:.45rem .9rem;border-radius:100px;font-size:.8rem;font-weight:600;transition:all .2s}
-.btn-admin:hover{background:rgba(124,106,255,0.25)}
-.btn-logout{background:rgba(229,62,62,0.1);border:1px solid rgba(229,62,62,0.3);color:#fc8181;padding:.45rem .9rem;border-radius:100px;font-size:.8rem;font-weight:600;transition:all .2s;display:none}
-.btn-logout:hover{background:rgba(229,62,62,0.2)}
+
+/* Nav buttons */
+.btn-login{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.5rem 1.1rem;border-radius:100px;font-size:.82rem;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.btn-login:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
+.btn-account{background:rgba(255,107,43,0.1);border:1px solid rgba(255,107,43,0.3);color:var(--accent);padding:.5rem 1.1rem;border-radius:100px;font-size:.82rem;font-weight:600;transition:all .2s;display:none;align-items:center;gap:.4rem}
+.btn-account:hover{background:rgba(255,107,43,0.2)}
+.btn-admin-nav{background:rgba(124,106,255,0.12);border:1px solid rgba(124,106,255,0.3);color:#a89fff;padding:.5rem 1.1rem;border-radius:100px;font-size:.82rem;font-weight:600;transition:all .2s;display:none;align-items:center;gap:.4rem}
+.btn-admin-nav:hover{background:rgba(124,106,255,0.25)}
+.btn-logout-nav{background:none;border:none;color:var(--muted);font-size:.8rem;font-weight:500;padding:.4rem .6rem;transition:color .2s;display:none}
+.btn-logout-nav:hover{color:#fc8181}
 .btn-cart{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.5rem 1rem;border-radius:100px;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;transition:border-color .2s}
 .btn-cart:hover{border-color:rgba(255,107,43,0.4)}
 .cart-count{background:var(--accent);color:#fff;width:20px;height:20px;border-radius:50%;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;transition:transform .3s}
@@ -42,7 +45,7 @@ nav{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;
 .mob-nav.open{display:flex}
 .mob-nav a{color:var(--text);text-decoration:none;font-size:1rem;font-weight:500;padding:.5rem 0;border-bottom:1px solid var(--border)}
 
-/* HERO */
+/* ── HERO ── */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 5% 5rem;position:relative;overflow:hidden}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,107,43,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,43,0.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at 60% 40%,black 20%,transparent 70%)}
 .hero-glow{position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(255,107,43,0.1) 0%,transparent 65%);top:-150px;right:-200px;pointer-events:none}
@@ -61,31 +64,29 @@ h1 em{font-style:normal;color:var(--accent)}
 .sl{font-size:.78rem;color:var(--muted);font-weight:500}
 @keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
-/* BUTTONS */
+/* ── BUTTONS ── */
 .btn-p{background:var(--accent);color:#fff;padding:.85rem 2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(255,107,43,0.3);display:inline-flex;align-items:center;gap:.4rem}
 .btn-p:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(255,107,43,0.5)}
-.btn-o{background:transparent;color:var(--text);padding:.85rem 2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:600;font-size:.95rem;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,background .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-o{background:transparent;color:var(--text);padding:.85rem 2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:600;font-size:.95rem;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,background .2s;display:inline-flex;align-items:center;gap:.4rem}
 .btn-o:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
 
-/* SECTIONS */
+/* ── SECTIONS ── */
 section{padding:5rem 5%}
 .stag{font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem}
 h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;line-height:1.1}
 .sdesc{color:var(--muted);max-width:520px;margin-top:.7rem;font-size:.95rem}
 .sh{margin-bottom:2.5rem}
 
-/* CATEGORIES */
+/* ── CATEGORIES ── */
 #categorii{background:var(--surface)}
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.9rem}
 .cat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem 1.2rem;cursor:pointer;text-decoration:none;color:var(--text);transition:transform .3s,border-color .3s;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;position:relative;overflow:hidden}
 .cat-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,43,0.07),transparent);opacity:0;transition:opacity .3s}
 .cat-card:hover{transform:translateY(-4px);border-color:rgba(255,107,43,0.35)}
 .cat-card:hover::after{opacity:1}
-.ci{font-size:2rem}
-.cn{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}
-.cc{font-size:.75rem;color:var(--muted)}
+.ci{font-size:2rem}.cn{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}.cc{font-size:.75rem;color:var(--muted)}
 
-/* PRODUCTS */
+/* ── PRODUCTS ── */
 .ph{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
 .pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.4rem}
 .pc{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s}
@@ -94,8 +95,7 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .pie{transition:transform .4s}
 .pc:hover .pie{transform:scale(1.12) rotate(-5deg)}
 .pb{position:absolute;top:.8rem;left:.8rem;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:100px}
-.pb.sale{background:#e53e3e}
-.pb.newb{background:var(--accent2);color:#0a0a0f}
+.pb.sale{background:#e53e3e}.pb.newb{background:var(--accent2);color:#0a0a0f}
 .pbd{padding:1.2rem}
 .pn{font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;margin-bottom:.25rem}
 .pm{font-size:.8rem;color:var(--muted);margin-bottom:.6rem}
@@ -105,37 +105,69 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .addbtn{background:rgba(255,107,43,0.12);border:1px solid rgba(255,107,43,0.3);color:var(--accent);padding:.4rem .95rem;border-radius:100px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
 .addbtn:hover,.addbtn.added{background:var(--accent);color:#fff;border-color:var(--accent)}
 
-/* LOGIN MODAL */
-.loverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:800;backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1rem}
-.loverlay.open{display:flex}
-.lmodal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:400px;overflow:hidden;animation:mpop .35s cubic-bezier(.34,1.56,.64,1)}
+/* ── LOGIN / REGISTER MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:800;backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:420px;overflow:hidden;animation:mpop .35s cubic-bezier(.34,1.56,.64,1)}
 @keyframes mpop{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.lhead{padding:2rem 2rem 1.2rem;text-align:center}
-.llogo{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:1.2rem}
-.lhex{width:44px;height:44px;background:var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff}
-.ltxt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem}
-.ltxt span{color:var(--accent)}
-.ltitle{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:.3rem}
-.lsub{font-size:.82rem;color:var(--muted)}
-.lbody{padding:1.2rem 2rem 2rem}
-.lerr{background:rgba(229,62,62,0.1);border:1px solid rgba(229,62,62,0.3);color:#fc8181;border-radius:8px;padding:.7rem 1rem;font-size:.82rem;margin-bottom:1rem;display:none;animation:fup .2s ease}
-.lerr.show{display:block}
-.lfield{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
-.lfield label{font-size:.78rem;font-weight:600;color:var(--muted)}
-.lfield input{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:.8rem 1rem;font-size:.9rem;outline:none;transition:border-color .2s;width:100%}
-.lfield input:focus{border-color:rgba(255,107,43,0.5)}
+.modal-head{padding:2rem 2rem 1.2rem;text-align:center}
+.modal-logo{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:1.2rem}
+.modal-hex{width:42px;height:42px;background:var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:#fff}
+.modal-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem}
+.modal-brand span{color:var(--accent)}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:.3rem}
+.modal-sub{font-size:.82rem;color:var(--muted)}
+.modal-tabs{display:flex;border-bottom:1px solid var(--border);margin:0}
+.mtab{flex:1;padding:.9rem;background:none;border:none;color:var(--muted);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.mtab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.modal-body{padding:1.5rem 2rem 2rem}
+.mform{display:none}
+.mform.active{display:block}
+.merr{background:rgba(229,62,62,0.1);border:1px solid rgba(229,62,62,0.3);color:#fc8181;border-radius:8px;padding:.7rem 1rem;font-size:.82rem;margin-bottom:1rem;display:none}
+.merr.show{display:block}
+.mok{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--accent2);border-radius:8px;padding:.7rem 1rem;font-size:.82rem;margin-bottom:1rem;display:none}
+.mok.show{display:block}
+.mfield{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.mfield label{font-size:.78rem;font-weight:600;color:var(--muted)}
+.mfield input{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:.8rem 1rem;font-size:.9rem;outline:none;transition:border-color .2s;width:100%}
+.mfield input:focus{border-color:rgba(255,107,43,0.5)}
 .pwrap{position:relative}
 .pwrap input{padding-right:2.8rem}
 .ptog{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;padding:.2rem;transition:color .2s;line-height:1}
 .ptog:hover{color:var(--text)}
-.lbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:.9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 0 25px rgba(255,107,43,0.3);margin-top:.4rem}
-.lbtn:hover{transform:translateY(-1px);box-shadow:0 0 40px rgba(255,107,43,0.5)}
-.lbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.lcancel{width:100%;background:none;border:none;color:var(--muted);font-size:.82rem;margin-top:.8rem;cursor:pointer;padding:.4rem;transition:color .2s}
-.lcancel:hover{color:var(--text)}
-.lnote{text-align:center;font-size:.7rem;color:var(--muted);margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
+.mbtn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:.9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 0 25px rgba(255,107,43,0.3);margin-top:.4rem}
+.mbtn:hover{transform:translateY(-1px);box-shadow:0 0 40px rgba(255,107,43,0.5)}
+.mbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.modal-note{text-align:center;font-size:.7rem;color:var(--muted);margin-top:1rem}
 
-/* ADMIN */
+/* ── ACCOUNT PANEL ── */
+.acc-panel{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:480px;overflow:hidden;animation:mpop .35s cubic-bezier(.34,1.56,.64,1)}
+.acc-head{padding:1.8rem 2rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.acc-head h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+.acc-user{display:flex;align-items:center;gap:1rem;padding:1.2rem 2rem;border-bottom:1px solid var(--border)}
+.acc-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#ff9a5c);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#fff;flex-shrink:0}
+.acc-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
+.acc-email{font-size:.78rem;color:var(--muted)}
+.acc-body{padding:1.2rem 2rem}
+.acc-section{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;margin-top:1.2rem}
+.acc-section:first-child{margin-top:0}
+.acc-orders{display:flex;flex-direction:column;gap:.7rem}
+.acc-order{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:.9rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.acc-order-id{font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem}
+.acc-order-date{font-size:.75rem;color:var(--muted)}
+.acc-order-status{font-size:.72rem;font-weight:700;padding:.2rem .6rem;border-radius:100px}
+.status-livrat{background:rgba(0,212,170,0.15);color:var(--accent2)}
+.status-progress{background:rgba(255,107,43,0.15);color:var(--accent)}
+.status-procesare{background:rgba(124,106,255,0.15);color:#a89fff}
+.acc-order-total{font-family:'Syne',sans-serif;font-weight:800;color:var(--accent);font-size:.88rem}
+.acc-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.acc-info-item{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:.8rem 1rem}
+.acc-info-label{font-size:.7rem;color:var(--muted);margin-bottom:.2rem}
+.acc-info-val{font-weight:600;font-size:.85rem}
+.acc-logout-btn{width:100%;background:rgba(229,62,62,0.08);border:1px solid rgba(229,62,62,0.2);color:#fc8181;border-radius:100px;padding:.8rem;font-family:'Syne',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;transition:all .2s;margin-top:1.2rem}
+.acc-logout-btn:hover{background:rgba(229,62,62,0.15)}
+
+/* ── ADMIN PANEL ── */
 .aoverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
 .aoverlay.open{display:flex}
 .apanel{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:920px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column}
@@ -160,7 +192,7 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .ibtn{background:none;border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:8px;font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
 .ibtn:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
 .ibtn.del:hover{border-color:rgba(229,62,62,0.4);color:#e53e3e}
-.addform{background:var(--card);border:1px solid rgba(255,107,43,0.2);border-radius:var(--r);padding:1.5rem;margin-top:.5rem}
+.addform{background:var(--card);border:1px solid rgba(255,107,43,0.2);border-radius:var(--r);padding:1.5rem}
 .addform h4{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1.2rem;font-size:.95rem;color:var(--accent)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
 .ff{display:flex;flex-direction:column;gap:.4rem}
@@ -177,16 +209,16 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .bgpick{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
 .bgsw{width:36px;height:36px;border-radius:8px;cursor:pointer;border:2px solid var(--border);transition:border-color .2s}
 .bgsw.sel{border-color:var(--accent)}
+.xbtn{background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.xbtn:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
 
-/* CART */
+/* ── CART ── */
 .coverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:400;backdrop-filter:blur(6px)}
 .coverlay.open{display:block}
 .cdrawer{position:fixed;right:0;top:0;bottom:0;width:420px;max-width:100vw;background:var(--surface);border-left:1px solid var(--border);z-index:401;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
 .cdrawer.open{transform:translateX(0)}
 .chead{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .chead h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
-.xbtn{background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-.xbtn:hover{border-color:rgba(255,107,43,0.4);color:var(--accent)}
 .citems{flex:1;overflow-y:auto;padding:1.2rem}
 .cempty{text-align:center;padding:3rem 1rem;color:var(--muted)}
 .cempty-icon{font-size:3rem;margin-bottom:1rem}
@@ -210,15 +242,14 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .chkbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .snote{text-align:center;font-size:.72rem;color:var(--muted);margin-top:.8rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
 
-/* CHECKOUT */
+/* ── CHECKOUT ── */
 .choverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:600;backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1rem}
 .choverlay.open{display:flex}
 .chmodal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto}
 .chhead{padding:1.5rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:10}
 .chhead h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
 .chbody{padding:2rem}
-.chstep{display:none}
-.chstep.active{display:block}
+.chstep{display:none}.chstep.active{display:block}
 .chlbl{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
 .chfield{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
 .chfield label{font-size:.78rem;font-weight:600;color:var(--muted)}
@@ -250,7 +281,7 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .sukscreen h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:.6rem}
 .sukscreen p{color:var(--muted);font-size:.9rem;max-width:340px;margin:0 auto 2rem}
 
-/* PERKS */
+/* ── PERKS ── */
 #avantaje{background:var(--surface)}
 .perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:2.5rem}
 .perk{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.8rem}
@@ -258,11 +289,11 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .perktit{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.35rem}
 .perkd{font-size:.85rem;color:var(--muted)}
 
-/* CTA */
+/* ── CTA ── */
 #comanda{text-align:center;background:linear-gradient(135deg,rgba(255,107,43,0.07),rgba(0,212,170,0.05));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .ctabtns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
 
-/* CONTACT */
+/* ── CONTACT ── */
 .cgrid{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;margin-top:2.5rem}
 .coni{display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);margin-bottom:.7rem;text-decoration:none;color:var(--text);transition:border-color .2s}
 .coni:hover{border-color:rgba(255,107,43,0.4)}
@@ -272,7 +303,7 @@ h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weigh
 .cf{display:flex;flex-direction:column;gap:.9rem}
 .cf .ff input,.cf .ff textarea{background:var(--card)}
 
-/* FOOTER */
+/* ── FOOTER ── */
 footer{padding:2.5rem 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .flogo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
 .flogo span{color:var(--accent)}
@@ -281,11 +312,11 @@ footer p{font-size:.78rem;color:var(--muted)}
 .flinks a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s}
 .flinks a:hover{color:var(--text)}
 
-/* TOAST */
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card2);border:1px solid var(--border);color:var(--text);padding:.85rem 1.5rem;border-radius:12px;font-weight:600;font-size:.88rem;opacity:0;transition:all .3s;z-index:9998;white-space:nowrap;pointer-events:none}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card2);border:1px solid var(--border);color:var(--text);padding:.85rem 1.5rem;border-radius:12px;font-weight:600;font-size:.88rem;opacity:0;transition:all .3s;z-index:9998;pointer-events:none;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* BG COLOURS */
+/* ── BG COLOURS ── */
 .bg1{background:linear-gradient(135deg,#1a1230,#0e0e1a)}
 .bg2{background:linear-gradient(135deg,#12201a,#0a0f0e)}
 .bg3{background:linear-gradient(135deg,#1a1208,#0f0e0a)}
@@ -293,102 +324,59 @@ footer p{font-size:.78rem;color:var(--muted)}
 .bg5{background:linear-gradient(135deg,#0f1a1a,#0a0e0f)}
 .bg6{background:linear-gradient(135deg,#1a1218,#0f0a0f)}
 
-/* ══ RESPONSIVE — TABLET (max 900px) ══ */
+/* ══ RESPONSIVE — TABLET ══ */
 @media(max-width:900px){
   .nav-links{display:none}
   .hamburger{display:flex}
-  .admin-indicator{display:none!important}
   .cgrid{grid-template-columns:1fr;gap:2rem}
   .pg{grid-template-columns:repeat(2,1fr);gap:1rem}
   .cat-grid{grid-template-columns:repeat(3,1fr)}
   .perks{grid-template-columns:repeat(2,1fr)}
-  .hero{padding:7rem 5% 4rem}
-  .hero-stats{gap:2rem}
   .apanel{max-height:95vh;border-radius:16px}
-  .chmodal{border-radius:16px}
   .frow{grid-template-columns:1fr 1fr}
+  .acc-info-grid{grid-template-columns:1fr 1fr}
 }
-
-/* ══ RESPONSIVE — MOBILE (max 600px) ══ */
+/* ══ RESPONSIVE — MOBILE ══ */
 @media(max-width:600px){
   nav{padding:.85rem 4%}
-  .btn-admin{font-size:.72rem;padding:.4rem .7rem}
-  .btn-logout{font-size:.72rem;padding:.4rem .7rem}
-  .btn-cart{padding:.45rem .8rem;font-size:.8rem}
-
+  .btn-login,.btn-account,.btn-admin-nav{font-size:.75rem;padding:.4rem .75rem}
+  .btn-cart{padding:.4rem .75rem;font-size:.78rem}
   section{padding:3.5rem 4%}
-
   .hero{padding:6.5rem 4% 3.5rem;min-height:auto}
-  .hero-badge{font-size:.72rem;padding:.25rem .75rem;margin-bottom:1.2rem}
   h1{font-size:clamp(2.2rem,9vw,3rem)}
   .hero-sub{font-size:.95rem;margin:1rem 0 1.8rem}
   .hero-actions{flex-direction:column;gap:.7rem}
-  .hero-actions .btn-p,.hero-actions .btn-o{width:100%;justify-content:center;padding:.85rem 1.5rem}
+  .hero-actions .btn-p,.hero-actions .btn-o{width:100%;justify-content:center}
   .hero-stats{gap:1.5rem;margin-top:2.5rem}
   .sn{font-size:1.6rem}
-
   .cat-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
-  .cat-card{padding:1.2rem 1rem}
-  .ci{font-size:1.6rem}
-  .cn{font-size:.82rem}
-
   .pg{grid-template-columns:1fr;gap:1rem}
-  .pi{height:180px;font-size:4rem}
-
-  .perks{grid-template-columns:1fr;gap:1rem}
-
-  .cgrid{grid-template-columns:1fr;gap:1.5rem}
-
-  footer{flex-direction:column;text-align:center;padding:2rem 4%;gap:.8rem}
+  .perks{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:2rem 4%}
   .flinks{justify-content:center;gap:1rem}
-
-  /* CART */
-  .cdrawer{width:100vw;border-radius:0}
-  .citems{padding:.9rem}
-  .citem{padding:.8rem}
-  .citemoji{font-size:1.8rem;min-width:40px}
-  .cfooter{padding:1rem}
-
-  /* CHECKOUT */
+  .cdrawer{width:100vw}
   .choverlay{padding:0;align-items:flex-end}
   .chmodal{border-radius:20px 20px 0 0;max-height:95vh;width:100%}
-  .chhead{padding:1.2rem 1.5rem}
   .chbody{padding:1.2rem 1.5rem}
   .chrow2{grid-template-columns:1fr}
   .chnav{flex-direction:column}
   .chnav .btn-p,.chnav .btn-o{flex:none;width:100%;justify-content:center;border-radius:12px}
-  .pmrow{gap:.5rem}
-  .pmopt{padding:.5rem .8rem;font-size:.78rem}
-
-  /* ADMIN */
+  .overlay{padding:0;align-items:flex-end}
+  .modal,.acc-panel{border-radius:20px 20px 0 0;max-height:92vh;width:100%;overflow-y:auto}
+  .modal-body,.acc-body{padding:1.2rem 1.5rem 2rem}
   .aoverlay{padding:.5rem}
   .apanel{border-radius:16px;max-height:95vh}
-  .ahead{padding:1.2rem 1.5rem}
   .abody{padding:1.2rem}
-  .atabs{gap:.4rem}
   .atab{font-size:.75rem;padding:.4rem .8rem}
-  .arow{gap:.7rem}
   .frow{grid-template-columns:1fr}
   .egrid{grid-template-columns:repeat(6,1fr)}
-
-  /* LOGIN */
-  .loverlay{padding:.5rem;align-items:flex-end}
-  .lmodal{border-radius:20px 20px 0 0;width:100%}
-  .lhead{padding:1.5rem 1.5rem 1rem}
-  .lbody{padding:1rem 1.5rem 1.5rem}
-
-  /* TOAST */
-  .toast{width:90%;text-align:center;white-space:normal;bottom:1.2rem}
+  .acc-info-grid{grid-template-columns:1fr}
+  .toast{width:90%;bottom:1.2rem}
 }
-
-/* ══ RESPONSIVE — SMALL PHONES (max 400px) ══ */
 @media(max-width:400px){
   h1{font-size:2rem}
   .hero-stats{flex-direction:column;gap:.8rem}
   .cat-grid{grid-template-columns:repeat(2,1fr)}
-  .pg{grid-template-columns:1fr}
-  .btn-admin,.btn-logout{display:none}
-  .btn-cart span.cart-count{width:16px;height:16px;font-size:.6rem}
 }
 </style>
 </head>
@@ -404,10 +392,16 @@ footer p{font-size:.78rem;color:var(--muted)}
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <div class="admin-indicator" id="adminInd"><div class="ai-dot"></div>Admin activ</div>
-    <button class="btn-admin" id="adminBtn" onclick="handleAdminClick()">⚙️ Admin</button>
-    <button class="btn-logout" id="logoutBtn" onclick="handleLogout()">↩ Ieși</button>
-    <button class="btn-cart" onclick="openCart()">🛒 Coș <span class="cart-count" id="cartCount">0</span></button>
+    <!-- Stare: nelogat -->
+    <button class="btn-login" id="btnLogin" onclick="openLoginModal()">👤 Login</button>
+    <!-- Stare: logat user normal -->
+    <button class="btn-account" id="btnAccount" onclick="openAccountPanel()">👤 <span id="navUserName">Contul meu</span></button>
+    <!-- Stare: logat admin -->
+    <button class="btn-admin-nav" id="btnAdminNav" onclick="openAdmin()">⚙️ Admin</button>
+    <!-- Logout (vizibil când e logat) -->
+    <button class="btn-logout-nav" id="btnLogout" onclick="doLogout()">↩ Ieși</button>
+    <!-- Cart -->
+    <button class="btn-cart" onclick="openCart()">🛒 <span class="cart-count" id="cartCount">0</span></button>
     <button class="hamburger" onclick="toggleMNav()"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -454,9 +448,9 @@ footer p{font-size:.78rem;color:var(--muted)}
   <div class="sh"><div class="stag">De ce Mestera 3D</div><h2>Calitate pe care o poți atinge</h2></div>
   <div class="perks">
     <div class="perk"><div class="perkicon">⚡</div><div class="perktit">Livrare în 24–48h</div><div class="perkd">Procesăm rapid și expediem prin curier în toată România.</div></div>
-    <div class="perk"><div class="perkicon">🎨</div><div class="perktit">Personalizare completă</div><div class="perkd">Culori, materiale, dimensiuni — adaptăm orice produs exact cum vrei.</div></div>
-    <div class="perk"><div class="perkicon">🌱</div><div class="perktit">Materiale eco</div><div class="perkd">Filament PLA biodegradabil — bun pentru tine și pentru natură.</div></div>
-    <div class="perk"><div class="perkicon">🔒</div><div class="perktit">Garanție 30 de zile</div><div class="perkd">Dacă produsul nu e conform, îl înlocuim gratuit fără discuții.</div></div>
+    <div class="perk"><div class="perkicon">🎨</div><div class="perktit">Personalizare completă</div><div class="perkd">Culori, materiale, dimensiuni — adaptăm orice produs.</div></div>
+    <div class="perk"><div class="perkicon">🌱</div><div class="perktit">Materiale eco</div><div class="perkd">Filament PLA biodegradabil — bun pentru tine și natură.</div></div>
+    <div class="perk"><div class="perkicon">🔒</div><div class="perktit">Garanție 30 de zile</div><div class="perkd">Dacă produsul nu e conform, îl înlocuim gratuit.</div></div>
     <div class="perk"><div class="perkicon">🇷🇴</div><div class="perktit">100% Made in Romania</div><div class="perkd">Printat, verificat și ambalat manual în atelierul nostru.</div></div>
     <div class="perk"><div class="perkicon">💬</div><div class="perktit">Suport rapid</div><div class="perkd">Răspundem în max 2 ore pe WhatsApp sau email.</div></div>
   </div>
@@ -466,7 +460,7 @@ footer p{font-size:.78rem;color:var(--muted)}
 <section id="comanda">
   <div class="stag">Gata să comanzi?</div>
   <h2>Aduce-ți ideea la viață</h2>
-  <p class="sdesc" style="margin:0 auto .5rem;text-align:center">Fie că ai un design sau doar o idee — suntem aici să te ajutăm.</p>
+  <p class="sdesc" style="margin:0 auto .5rem;text-align:center">Fie că ai un design sau doar o idee — suntem aici.</p>
   <div class="ctabtns">
     <button class="btn-p" onclick="goTo('#produse')">Cumpără acum →</button>
     <button class="btn-o" onclick="goTo('#contact')">Comandă personalizată</button>
@@ -478,7 +472,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   <div class="sh"><div class="stag">Hai să vorbim</div><h2>Contactează-ne</h2><p class="sdesc">Întrebare sau comandă specială? Suntem disponibili!</p></div>
   <div class="cgrid">
     <div>
-      <a href="/cdn-cgi/l/email-protection#6b0804051f0a081f2b060e181f0e190a580f451904" class="coni"><div class="coniico">📧</div><div><div class="conilbl">Email</div><div class="coniv"><span class="__cf_email__" data-cfemail="8deee2e3f9eceef9cde0e8fef9e8ffecbee9a3ffe2">[email&#160;protected]</span></div></div></a>
+      <a href="mailto:contact@mestera3d.ro" class="coni"><div class="coniico">📧</div><div><div class="conilbl">Email</div><div class="coniv">contact@mestera3d.ro</div></div></a>
       <a href="tel:+40700000000" class="coni"><div class="coniico">📞</div><div><div class="conilbl">Telefon / WhatsApp</div><div class="coniv">+40 700 000 000</div></div></a>
       <div class="coni"><div class="coniico">📍</div><div><div class="conilbl">Locație</div><div class="coniv">România</div></div></div>
       <div class="coni"><div class="coniico">⏰</div><div><div class="conilbl">Program</div><div class="coniv">Lun–Vin: 9:00 – 18:00</div></div></div>
@@ -501,48 +495,69 @@ footer p{font-size:.78rem;color:var(--muted)}
 
 <div class="toast" id="toast"></div>
 
-<!-- ══ LOGIN MODAL ══ -->
-<div class="loverlay" id="loginOverlay" onclick="if(event.target===this)closeLogin()">
-  <div class="lmodal">
-    <div class="lhead">
-      <div class="llogo">
-        <div class="lhex">M</div>
-        <span class="ltxt">Mestera <span>3D</span></span>
-      </div>
-      <div class="ltitle">Panou de administrare</div>
-      <div class="lsub">Autentifică-te pentru a accesa panoul admin</div>
+<!-- ══ LOGIN / REGISTER MODAL ══ -->
+<div class="overlay" id="loginOverlay" onclick="if(event.target===this)closeLoginModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-logo"><div class="modal-hex">M</div><span class="modal-brand">Mestera <span>3D</span></span></div>
     </div>
-    <div class="lbody">
-      <div class="lerr" id="loginErr">❌ Email sau parolă incorectă.</div>
-      <div class="lfield">
-        <label>Adresă email</label>
-        <input type="email" id="lEmail" placeholder="admin@mestera3d.ro" autocomplete="email" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <div class="lfield">
-        <label>Parolă</label>
-        <div class="pwrap">
-          <input type="password" id="lPass" placeholder="••••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-          <button class="ptog" id="ptog" onclick="togglePassVis()" type="button">👁</button>
+    <div class="modal-tabs">
+      <button class="mtab active" id="tabLogin" onclick="switchTab('login')">Autentificare</button>
+      <button class="mtab" id="tabReg" onclick="switchTab('register')">Cont nou</button>
+    </div>
+    <div class="modal-body">
+      <!-- LOGIN FORM -->
+      <div class="mform active" id="formLogin">
+        <div class="merr" id="loginErr"></div>
+        <div class="mfield"><label>Email</label><input type="email" id="lEmail" placeholder="email@exemplu.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        <div class="mfield"><label>Parolă</label>
+          <div class="pwrap"><input type="password" id="lPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"><button class="ptog" onclick="togglePw('lPass',this)" type="button">👁</button></div>
         </div>
+        <button class="mbtn" id="loginBtn" onclick="doLogin()">🔐 Autentifică-te</button>
+        <div class="modal-note">🔒 Conexiune securizată SSL</div>
       </div>
-      <button class="lbtn" id="lBtn" onclick="doLogin()">🔐 Autentifică-te</button>
-      <button class="lcancel" onclick="closeLogin()">Anulează</button>
-      <div class="lnote">🔒 Acces restricționat · Mestera 3D Admin</div>
+      <!-- REGISTER FORM -->
+      <div class="mform" id="formReg">
+        <div class="merr" id="regErr"></div>
+        <div class="mok" id="regOk"></div>
+        <div class="mfield"><label>Numele tău</label><input type="text" id="rName" placeholder="Ion Popescu"></div>
+        <div class="mfield"><label>Email</label><input type="email" id="rEmail" placeholder="email@exemplu.com"></div>
+        <div class="mfield"><label>Parolă</label>
+          <div class="pwrap"><input type="password" id="rPass" placeholder="Minim 6 caractere"><button class="ptog" onclick="togglePw('rPass',this)" type="button">👁</button></div>
+        </div>
+        <button class="mbtn" id="regBtn" onclick="doRegister()">✨ Creează cont</button>
+        <div class="modal-note">Prin înregistrare ești de acord cu Termenii și Condițiile.</div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ══ ADMIN OVERLAY ══ -->
+<!-- ══ ACCOUNT PANEL ══ -->
+<div class="overlay" id="accOverlay" onclick="if(event.target===this)closeAccPanel()">
+  <div class="acc-panel">
+    <div class="acc-head"><h3>👤 Contul meu</h3><button class="xbtn" onclick="closeAccPanel()">✕</button></div>
+    <div class="acc-user">
+      <div class="acc-avatar" id="accAvatar">I</div>
+      <div><div class="acc-name" id="accName">Ion Popescu</div><div class="acc-email" id="accEmail">ion@email.com</div></div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-section">📦 Comenzile mele</div>
+      <div class="acc-orders" id="accOrders"></div>
+      <div class="acc-section">ℹ️ Informații cont</div>
+      <div class="acc-info-grid" id="accInfoGrid"></div>
+      <button class="acc-logout-btn" onclick="doLogout();closeAccPanel()">↩ Deconectare</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PANEL ══ -->
 <div class="aoverlay" id="adminOverlay">
   <div class="apanel">
-    <div class="ahead">
-      <h3>⚙️ Panou Admin — Mestera 3D</h3>
-      <button class="xbtn" onclick="closeAdmin()">✕</button>
-    </div>
+    <div class="ahead"><h3>⚙️ Panou Admin — Mestera 3D</h3><button class="xbtn" onclick="closeAdmin()">✕</button></div>
     <div class="abody">
       <div class="atabs">
-        <button class="atab active" onclick="atab('products',this)">📦 Produse existente</button>
-        <button class="atab" onclick="atab('add',this)">➕ Adaugă produs</button>
+        <button class="atab active" onclick="atab('products',this)">📦 Produse</button>
+        <button class="atab" onclick="atab('add',this)">➕ Adaugă</button>
         <button class="atab" onclick="atab('cats',this)">🏷️ Categorii</button>
       </div>
       <div id="tab-products"><div class="alist" id="adminList"></div></div>
@@ -561,13 +576,12 @@ footer p{font-size:.78rem;color:var(--muted)}
             <div class="ff"><label>Stele (1–5)</label><input type="number" id="nStars" min="1" max="5" value="5"></div>
             <div class="ff"><label>Nr. recenzii</label><input type="number" id="nRev" min="0" value="0"></div>
           </div>
-          <div class="ff" style="margin-bottom:1rem">
-            <label>Badge</label>
+          <div class="ff" style="margin-bottom:1rem"><label>Badge</label>
             <div class="bsel" id="badgeSel">
-              <span class="bopt sel" style="background:rgba(100,100,100,0.15);color:var(--muted)" data-v="" onclick="pickBadge(this,'')">Fără</span>
-              <span class="bopt" style="background:rgba(255,107,43,0.15);color:var(--accent)" data-v="NOU" onclick="pickBadge(this,'NOU')">NOU</span>
-              <span class="bopt" style="background:rgba(229,62,62,0.15);color:#e53e3e" data-v="PROMO" onclick="pickBadge(this,'PROMO')">PROMO</span>
-              <span class="bopt" style="background:rgba(0,212,170,0.15);color:var(--accent2)" data-v="TOP" onclick="pickBadge(this,'TOP')">TOP</span>
+              <span class="bopt sel" style="background:rgba(100,100,100,0.15);color:var(--muted)" onclick="pickBadge(this,'')">Fără</span>
+              <span class="bopt" style="background:rgba(255,107,43,0.15);color:var(--accent)" onclick="pickBadge(this,'NOU')">NOU</span>
+              <span class="bopt" style="background:rgba(229,62,62,0.15);color:#e53e3e" onclick="pickBadge(this,'PROMO')">PROMO</span>
+              <span class="bopt" style="background:rgba(0,212,170,0.15);color:var(--accent2)" onclick="pickBadge(this,'TOP')">TOP</span>
             </div>
           </div>
           <div class="ff" style="margin-bottom:1rem"><label>Emoji produs</label><div class="egrid" id="emojiGrid"></div></div>
@@ -580,7 +594,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </div>
 
-<!-- ══ CART DRAWER ══ -->
+<!-- ══ CART ══ -->
 <div class="coverlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cdrawer" id="cartDrawer">
   <div class="chead"><h3>🛒 Coșul tău</h3><button class="xbtn" onclick="closeCart()">✕</button></div>
@@ -592,154 +606,254 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </div>
 
-<!-- ══ CHECKOUT MODAL ══ -->
+<!-- ══ CHECKOUT ══ -->
 <div class="choverlay" id="chOverlay">
   <div class="chmodal">
     <div class="chhead"><h3>💳 Finalizare comandă</h3><button class="xbtn" onclick="closeCheckout()">✕</button></div>
     <div class="chbody">
-      <div class="sdots">
-        <div class="sdot active" id="sd0"></div><div class="ssep"></div>
-        <div class="sdot" id="sd1"></div><div class="ssep"></div>
-        <div class="sdot" id="sd2"></div>
-      </div>
-      <!-- Step 0 -->
+      <div class="sdots"><div class="sdot active" id="sd0"></div><div class="ssep"></div><div class="sdot" id="sd1"></div><div class="ssep"></div><div class="sdot" id="sd2"></div></div>
       <div class="chstep active" id="chs0">
         <div class="chlbl">📦 Date de livrare</div>
         <div class="chrow2"><div class="chfield"><label>Prenume *</label><input type="text" id="g0" placeholder="Ion"></div><div class="chfield"><label>Nume *</label><input type="text" id="g1" placeholder="Popescu"></div></div>
         <div class="chfield"><label>Email *</label><input type="email" id="g2" placeholder="ion@email.com"></div>
         <div class="chfield"><label>Telefon *</label><input type="tel" id="g3" placeholder="+40 7XX XXX XXX"></div>
-        <div class="chfield"><label>Adresa *</label><input type="text" id="g4" placeholder="Str. Exemplu nr. 1, ap. 2"></div>
+        <div class="chfield"><label>Adresa *</label><input type="text" id="g4" placeholder="Str. Exemplu nr. 1"></div>
         <div class="chrow2"><div class="chfield"><label>Oraș *</label><input type="text" id="g5" placeholder="București"></div><div class="chfield"><label>Județ</label><input type="text" id="g6" placeholder="Ilfov"></div></div>
-        <div class="chfield"><label>Livrare</label>
-          <select id="g7"><option value="15">Curier standard (2–3 zile) — 15 RON</option><option value="25">Curier express (24h) — 25 RON</option><option value="0">Ridicare din atelier — Gratuit</option></select>
-        </div>
-        <div class="chnav"><button class="btn-o" onclick="closeCheckout()">← Înapoi</button><button class="btn-p" onclick="chGoStep(1)">Continuă la plată →</button></div>
+        <div class="chfield"><label>Livrare</label><select id="g7"><option value="15">Curier standard (2–3 zile) — 15 RON</option><option value="25">Curier express (24h) — 25 RON</option><option value="0">Ridicare din atelier — Gratuit</option></select></div>
+        <div class="chnav"><button class="btn-o" onclick="closeCheckout()">← Înapoi</button><button class="btn-p" onclick="chGoStep(1)">Continuă →</button></div>
       </div>
-      <!-- Step 1 -->
       <div class="chstep" id="chs1">
         <div id="oSummary" class="osum"></div>
         <div class="chlbl">💳 Metodă de plată</div>
         <div class="pmrow">
-          <div class="pmopt sel" onclick="setPM(this,'card')">💳 Card bancar</div>
+          <div class="pmopt sel" onclick="setPM(this,'card')">💳 Card</div>
           <div class="pmopt" onclick="setPM(this,'ramburs')">💵 Ramburs</div>
           <div class="pmopt" onclick="setPM(this,'transfer')">🏦 Transfer</div>
         </div>
-        <div id="pmCard">
-          <div class="ibox">🔒 <strong>Plată securizată Stripe</strong> — Visa, Mastercard, Amex. Datele cardului nu sunt stocate la noi.</div>
-          <div class="chlbl">Date card</div>
+        <div id="pmCard"><div class="ibox">🔒 <strong>Plată securizată Stripe</strong> — Visa, Mastercard, Amex.</div>
           <div class="chfield"><label>Număr card</label><input type="text" id="cc1" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"></div>
-          <div class="chrow2"><div class="chfield"><label>Expiră (LL/AA)</label><input type="text" id="cc2" placeholder="12/26" maxlength="5" oninput="fmtExp(this)"></div><div class="chfield"><label>CVV</label><input type="text" id="cc3" placeholder="123" maxlength="4"></div></div>
+          <div class="chrow2"><div class="chfield"><label>Expiră</label><input type="text" id="cc2" placeholder="12/26" maxlength="5" oninput="fmtExp(this)"></div><div class="chfield"><label>CVV</label><input type="text" id="cc3" placeholder="123" maxlength="4"></div></div>
           <div class="chfield"><label>Nume pe card</label><input type="text" id="cc4" placeholder="ION POPESCU"></div>
         </div>
-        <div id="pmRamburs" style="display:none"><div class="ibox">💵 <strong>Ramburs la livrare</strong> — Plătești la sosirea coletului. Poate apărea o taxă suplimentară de la curier (5–8 RON).</div></div>
-        <div id="pmTransfer" style="display:none"><div class="ibox">🏦 <strong>Transfer bancar</strong> — Datele contului îți vor fi trimise pe email. Comanda se procesează după confirmare (1–2 zile).</div></div>
+        <div id="pmRamburs" style="display:none"><div class="ibox">💵 <strong>Ramburs la livrare</strong> — Plătești la sosirea coletului.</div></div>
+        <div id="pmTransfer" style="display:none"><div class="ibox">🏦 <strong>Transfer bancar</strong> — Datele contului pe email după comandă.</div></div>
         <div class="chnav"><button class="btn-o" onclick="chGoStep(0)">← Înapoi</button><button class="btn-p" id="payBtn" onclick="processPayment()">🔒 Plasează comanda</button></div>
       </div>
-      <!-- Step 2 -->
       <div class="chstep" id="chs2">
-        <div class="sukscreen">
-          <div class="sukicon">🎉</div>
-          <h3>Comandă plasată cu succes!</h3>
-          <p id="sukMsg">Vei primi confirmarea pe email în câteva minute. Pregătim comanda ta!</p>
-          <button class="btn-p" style="border:none;margin:0 auto" onclick="closeCheckout();clearCart()">← Înapoi la magazin</button>
-        </div>
+        <div class="sukscreen"><div class="sukicon">🎉</div><h3>Comandă plasată!</h3><p id="sukMsg">Vei primi confirmarea pe email în câteva minute.</p>
+          <button class="btn-p" style="border:none;margin:0 auto" onclick="closeCheckout();clearCart()">← Înapoi la magazin</button></div>
       </div>
     </div>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ════════════════════════════
-   AUTH — parola stocată ca SHA-256
-   (nu apare în clar în cod)
-════════════════════════════ */
+<script>
+/* ═══════════════════════
+   AUTH CONFIG
+═══════════════════════ */
 const ADMIN_EMAIL = 'theoladunca@gmail.com';
 const ADMIN_HASH  = '7c98ffaa5719ad5f08c443a8736be7c1fcdf3d809c7e07959fba7e4cb3f6fb9b';
-const SKEY = 'm3d_s';
+const SK = 'm3d_sess';
 
-let isAdmin = false;
+let currentUser = null; // {name, email, isAdmin, joined, orders:[]}
 
 async function sha256(s){
   const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
   return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 }
 
-function checkSession(){
-  try{ if(sessionStorage.getItem(SKEY)===ADMIN_HASH){ setAdminUI(true); return; } }catch(e){}
-  setAdminUI(false);
+/* Load session */
+function loadSession(){
+  try{
+    const raw = sessionStorage.getItem(SK);
+    if(raw) currentUser = JSON.parse(raw);
+  }catch(e){ currentUser=null; }
+  updateNavUI();
 }
 
-function setAdminUI(v){
-  isAdmin = v;
-  document.getElementById('adminInd').classList.toggle('show', v);
-  document.getElementById('logoutBtn').style.display = v ? 'block' : 'none';
+function saveSession(){
+  try{ sessionStorage.setItem(SK, JSON.stringify(currentUser)); }catch(e){}
 }
 
-function handleAdminClick(){
-  if(isAdmin) openAdmin();
-  else openLogin();
-}
+function updateNavUI(){
+  const loggedOut = !currentUser;
+  const loggedInUser = currentUser && !currentUser.isAdmin;
+  const loggedInAdmin = currentUser && currentUser.isAdmin;
 
-function handleLogout(){
-  try{ sessionStorage.removeItem(SKEY); }catch(e){}
-  isAdmin = false;
-  setAdminUI(false);
-  showToast('✓ Te-ai deconectat cu succes.');
-}
+  document.getElementById('btnLogin').style.display     = loggedOut ? 'flex' : 'none';
+  document.getElementById('btnAccount').style.display   = loggedInUser ? 'flex' : 'none';
+  document.getElementById('btnAdminNav').style.display  = loggedInAdmin ? 'flex' : 'none';
+  document.getElementById('btnLogout').style.display    = currentUser ? 'inline' : 'none';
 
-/* LOGIN */
-function openLogin(){
-  document.getElementById('lEmail').value='';
-  document.getElementById('lPass').value='';
-  document.getElementById('loginErr').classList.remove('show');
-  document.getElementById('loginOverlay').classList.add('open');
-  setTimeout(()=>document.getElementById('lEmail').focus(),350);
-}
-function closeLogin(){ document.getElementById('loginOverlay').classList.remove('open'); }
-
-async function doLogin(){
-  const email = document.getElementById('lEmail').value.trim().toLowerCase();
-  const pass  = document.getElementById('lPass').value;
-  const btn   = document.getElementById('lBtn');
-  const err   = document.getElementById('loginErr');
-
-  if(!email||!pass){ err.textContent='⚠️ Completează emailul și parola.'; err.classList.add('show'); return; }
-
-  btn.disabled=true; btn.textContent='⏳ Se verifică...';
-  err.classList.remove('show');
-
-  await new Promise(r=>setTimeout(r,700)); // anti brute-force delay
-
-  const h = await sha256(pass);
-
-  if(email===ADMIN_EMAIL && h===ADMIN_HASH){
-    try{ sessionStorage.setItem(SKEY, ADMIN_HASH); }catch(e){}
-    closeLogin();
-    setAdminUI(true);
-    btn.disabled=false; btn.textContent='🔐 Autentifică-te';
-    showToast('✓ Bine ai venit în panoul admin!');
-    setTimeout(()=>openAdmin(), 400);
-  } else {
-    err.textContent='❌ Email sau parolă incorectă.';
-    err.classList.add('show');
-    btn.disabled=false; btn.textContent='🔐 Autentifică-te';
-    document.getElementById('lPass').value='';
-    document.getElementById('lPass').focus();
+  if(currentUser){
+    const firstName = currentUser.name.split(' ')[0];
+    document.getElementById('navUserName').textContent = firstName;
   }
 }
 
-function togglePassVis(){
-  const i=document.getElementById('lPass'), b=document.getElementById('ptog');
-  if(i.type==='password'){i.type='text';b.textContent='🙈';}
-  else{i.type='password';b.textContent='👁';}
+/* ── LOGIN ── */
+async function doLogin(){
+  const email = document.getElementById('lEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('lPass').value;
+  const errEl = document.getElementById('loginErr');
+  const btn   = document.getElementById('loginBtn');
+
+  errEl.classList.remove('show');
+  if(!email||!pass){ errEl.textContent='⚠️ Completează emailul și parola.'; errEl.classList.add('show'); return; }
+
+  btn.disabled=true; btn.textContent='⏳ Se verifică...';
+  await new Promise(r=>setTimeout(r,600));
+
+  /* Admin check */
+  if(email === ADMIN_EMAIL){
+    const h = await sha256(pass);
+    if(h === ADMIN_HASH){
+      currentUser = {name:'Theo Ladunca', email:ADMIN_EMAIL, isAdmin:true, joined:'2024', orders:[]};
+      saveSession(); closeLoginModal(); updateNavUI();
+      showToast('✓ Bine ai venit, Admin!');
+      setTimeout(()=>openAdmin(), 400);
+      btn.disabled=false; btn.textContent='🔐 Autentifică-te';
+      return;
+    }
+  }
+
+  /* User check — caută în lista de useri înregistrați */
+  const users = getUsers();
+  const h = await sha256(pass);
+  const found = users.find(u => u.email===email && u.passHash===h);
+
+  if(found){
+    currentUser = {name:found.name, email:found.email, isAdmin:false, joined:found.joined, orders:found.orders||[]};
+    saveSession(); closeLoginModal(); updateNavUI();
+    showToast('✓ Bine ai venit, '+found.name.split(' ')[0]+'!');
+  } else {
+    errEl.textContent='❌ Email sau parolă incorectă.';
+    errEl.classList.add('show');
+    document.getElementById('lPass').value='';
+  }
+
+  btn.disabled=false; btn.textContent='🔐 Autentifică-te';
 }
 
-/* ════════════════════════════
+/* ── REGISTER ── */
+async function doRegister(){
+  const name  = document.getElementById('rName').value.trim();
+  const email = document.getElementById('rEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('rPass').value;
+  const errEl = document.getElementById('regErr');
+  const okEl  = document.getElementById('regOk');
+  const btn   = document.getElementById('regBtn');
+
+  errEl.classList.remove('show'); okEl.classList.remove('show');
+  if(!name||!email||!pass){ errEl.textContent='⚠️ Completează toate câmpurile.'; errEl.classList.add('show'); return; }
+  if(pass.length<6){ errEl.textContent='⚠️ Parola trebuie să aibă minim 6 caractere.'; errEl.classList.add('show'); return; }
+  if(!email.includes('@')){ errEl.textContent='⚠️ Email invalid.'; errEl.classList.add('show'); return; }
+  if(email === ADMIN_EMAIL){ errEl.textContent='❌ Acest email nu poate fi folosit.'; errEl.classList.add('show'); return; }
+
+  const users = getUsers();
+  if(users.find(u=>u.email===email)){ errEl.textContent='❌ Există deja un cont cu acest email.'; errEl.classList.add('show'); return; }
+
+  btn.disabled=true; btn.textContent='⏳ Se creează contul...';
+  await new Promise(r=>setTimeout(r,600));
+
+  const passHash = await sha256(pass);
+  const newUser = {name, email, passHash, joined: new Date().getFullYear().toString(), orders: demoOrders()};
+  users.push(newUser);
+  saveUsers(users);
+
+  okEl.textContent='✓ Cont creat cu succes! Te autentificăm...';
+  okEl.classList.add('show');
+  btn.disabled=false; btn.textContent='✨ Creează cont';
+
+  setTimeout(()=>{
+    currentUser = {name, email, isAdmin:false, joined:newUser.joined, orders:newUser.orders};
+    saveSession(); closeLoginModal(); updateNavUI();
+    showToast('✓ Bine ai venit, '+name.split(' ')[0]+'!');
+  }, 1200);
+}
+
+function doLogout(){
+  currentUser = null;
+  try{ sessionStorage.removeItem(SK); }catch(e){}
+  updateNavUI();
+  showToast('✓ Te-ai deconectat cu succes.');
+}
+
+/* Local users store */
+function getUsers(){ try{ return JSON.parse(localStorage.getItem('m3d_users')||'[]'); }catch(e){ return []; } }
+function saveUsers(u){ try{ localStorage.setItem('m3d_users', JSON.stringify(u)); }catch(e){} }
+
+/* Demo orders for new users */
+function demoOrders(){
+  return [
+    {id:'#M'+Math.floor(1000+Math.random()*9000), date:'15 Ian 2025', status:'livrat', total:'120 RON', items:'Dragon articulat'},
+    {id:'#M'+Math.floor(1000+Math.random()*9000), date:'2 Feb 2025',  status:'progress', total:'79 RON',  items:'Vază Voronoi'},
+  ];
+}
+
+/* ── MODAL UI ── */
+function openLoginModal(){
+  document.getElementById('lEmail').value='';
+  document.getElementById('lPass').value='';
+  document.getElementById('loginErr').classList.remove('show');
+  switchTab('login');
+  document.getElementById('loginOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('lEmail').focus(),350);
+}
+function closeLoginModal(){ document.getElementById('loginOverlay').classList.remove('open'); }
+
+function switchTab(t){
+  document.getElementById('tabLogin').classList.toggle('active',t==='login');
+  document.getElementById('tabReg').classList.toggle('active',t==='register');
+  document.getElementById('formLogin').classList.toggle('active',t==='login');
+  document.getElementById('formReg').classList.toggle('active',t==='register');
+}
+
+function togglePw(id, btn){
+  const i = document.getElementById(id);
+  if(i.type==='password'){i.type='text'; btn.textContent='🙈';}
+  else{i.type='password'; btn.textContent='👁';}
+}
+
+/* ── ACCOUNT PANEL ── */
+function openAccountPanel(){
+  if(!currentUser) return;
+  document.getElementById('accAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('accName').textContent = currentUser.name;
+  document.getElementById('accEmail').textContent = currentUser.email;
+
+  /* Orders */
+  const orders = currentUser.orders || [];
+  const ordersEl = document.getElementById('accOrders');
+  if(!orders.length){
+    ordersEl.innerHTML='<div style="color:var(--muted);font-size:.85rem;padding:.5rem 0">Nu ai comenzi plasate încă.</div>';
+  } else {
+    ordersEl.innerHTML = orders.map(o=>`
+      <div class="acc-order">
+        <div><div class="acc-order-id">${o.id}</div><div class="acc-order-date">${o.date} · ${o.items}</div></div>
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+          <span class="acc-order-status status-${o.status}">${o.status==='livrat'?'✓ Livrat':o.status==='progress'?'⏳ În curs':'📦 Procesare'}</span>
+          <span class="acc-order-total">${o.total}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  /* Info */
+  document.getElementById('accInfoGrid').innerHTML=`
+    <div class="acc-info-item"><div class="acc-info-label">Membru din</div><div class="acc-info-val">${currentUser.joined}</div></div>
+    <div class="acc-info-item"><div class="acc-info-label">Comenzi totale</div><div class="acc-info-val">${orders.length}</div></div>
+    <div class="acc-info-item"><div class="acc-info-label">Email</div><div class="acc-info-val" style="font-size:.78rem;word-break:break-all">${currentUser.email}</div></div>
+    <div class="acc-info-item"><div class="acc-info-label">Tip cont</div><div class="acc-info-val">Client</div></div>`;
+
+  document.getElementById('accOverlay').classList.add('open');
+}
+function closeAccPanel(){ document.getElementById('accOverlay').classList.remove('open'); }
+
+/* ═══════════════════════
    DATA
-════════════════════════════ */
+═══════════════════════ */
 const EMOJIS=['🏺','🐉','🔑','🌿','💡','🎯','🎮','🔧','💍','📦','🦁','🚀','⚙️','🌸','🏆','🎨','🦋','🌙','⭐','🔮','🦊','🐙','🌊','🎲'];
 const BGS=[{c:'bg1',col:'#1a1230'},{c:'bg2',col:'#12201a'},{c:'bg3',col:'#1a1208'},{c:'bg4',col:'#1a0f12'},{c:'bg5',col:'#0f1a1a'},{c:'bg6',col:'#1a1218'}];
-
 let selE='🏺', selBg='bg1', selBadge='', curPM='card', curStep=0;
 
 let products=[
@@ -750,33 +864,24 @@ let products=[
   {id:5,name:'Abajur Voronoi lampă birou',meta:'PLA translucid alb • E27',price:95,stars:5,reviews:12,badge:'PROMO',emoji:'💡',bg:'bg5',cat:'Decorațiuni'},
   {id:6,name:'Personalizat la cerere',meta:'Orice material • Orice formă',price:30,stars:5,reviews:0,badge:'',emoji:'🎯',bg:'bg6',cat:'Personalizate'},
 ];
-
 let categories=[
   {name:'Decorațiuni',icon:'🏠'},{name:'Piese tehnice',icon:'🔧'},
   {name:'Jucării & Jocuri',icon:'🎮'},{name:'Bijuterii',icon:'💍'},
   {name:'Organizatoare',icon:'📦'},{name:'Personalizate',icon:'✏️'},
 ];
-
 let cart=[];
 
-/* ════════════════════════════
+/* ═══════════════════════
    RENDER
-════════════════════════════ */
+═══════════════════════ */
 function renderProducts(){
   document.getElementById('prodGrid').innerHTML=products.map(p=>`
     <div class="pc">
-      <div class="pi ${p.bg}">
-        <span class="pie">${p.emoji}</span>
-        ${p.badge?`<span class="pb ${p.badge==='PROMO'?'sale':p.badge==='NOU'?'newb':''}">${p.badge}</span>`:''}
-      </div>
+      <div class="pi ${p.bg}"><span class="pie">${p.emoji}</span>${p.badge?`<span class="pb ${p.badge==='PROMO'?'sale':p.badge==='NOU'?'newb':''}">${p.badge}</span>`:''}</div>
       <div class="pbd">
-        <div class="pn">${p.name}</div>
-        <div class="pm">${p.meta}</div>
+        <div class="pn">${p.name}</div><div class="pm">${p.meta}</div>
         <div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)} <span style="color:var(--muted);font-size:.75rem">${p.reviews>0?'('+p.reviews+')':'Nou'}</span></div>
-        <div class="pf">
-          <span class="pp">${p.price} RON</span>
-          <button class="addbtn" id="ab${p.id}" onclick="addToCart(${p.id})">+ Adaugă</button>
-        </div>
+        <div class="pf"><span class="pp">${p.price} RON</span><button class="addbtn" id="ab${p.id}" onclick="addToCart(${p.id})">+ Adaugă</button></div>
       </div>
     </div>`).join('');
   scrollReveal();
@@ -785,40 +890,27 @@ function renderProducts(){
 function renderCategories(){
   document.getElementById('catGrid').innerHTML=categories.map(c=>{
     const n=products.filter(p=>p.cat===c.name).length;
-    return `<a href="#produse" class="cat-card">
-      <div class="ci">${c.icon}</div>
-      <div class="cn">${c.name}</div>
-      <div class="cc">${n} produ${n===1?'s':'se'}</div>
-    </a>`;
+    return `<a href="#produse" class="cat-card"><div class="ci">${c.icon}</div><div class="cn">${c.name}</div><div class="cc">${n} produ${n===1?'s':'se'}</div></a>`;
   }).join('');
 }
 
-/* ════════════════════════════
+/* ═══════════════════════
    CART
-════════════════════════════ */
+═══════════════════════ */
 function addToCart(id){
   const p=products.find(x=>x.id===id);
   const ex=cart.find(x=>x.id===id);
-  if(ex) ex.qty++; else cart.push({...p,qty:1});
+  if(ex)ex.qty++;else cart.push({...p,qty:1});
   updateCart();
   const b=document.getElementById('ab'+id);
   if(b){b.textContent='✓ Adăugat';b.classList.add('added');setTimeout(()=>{b.textContent='+ Adaugă';b.classList.remove('added')},1500);}
   const cc=document.getElementById('cartCount');
   cc.classList.add('bump');setTimeout(()=>cc.classList.remove('bump'),300);
-  showToast('✓ "'+p.name+'" adăugat în coș!');
+  showToast('✓ "'+p.name+'" adăugat!');
 }
-
-function changeQty(id,d){
-  const it=cart.find(x=>x.id===id);
-  if(!it)return;
-  it.qty+=d;
-  if(it.qty<=0) cart=cart.filter(x=>x.id!==id);
-  updateCart();
-}
-
+function changeQty(id,d){const it=cart.find(x=>x.id===id);if(!it)return;it.qty+=d;if(it.qty<=0)cart=cart.filter(x=>x.id!==id);updateCart();}
 function removeFromCart(id){cart=cart.filter(x=>x.id!==id);updateCart();}
 function clearCart(){cart=[];updateCart();}
-
 function updateCart(){
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const count=cart.reduce((s,i)=>s+i.qty,0);
@@ -826,224 +918,102 @@ function updateCart(){
   document.getElementById('cartTotal').textContent=total+' RON';
   document.getElementById('chkBtn').disabled=cart.length===0;
   const el=document.getElementById('cartItems');
-  if(!cart.length){
-    el.innerHTML='<div class="cempty"><div class="cempty-icon">🛒</div><div>Coșul tău este gol.</div><div style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Adaugă produse pentru a continua.</div></div>';
-    return;
-  }
+  if(!cart.length){el.innerHTML='<div class="cempty"><div class="cempty-icon">🛒</div><div>Coșul tău este gol.</div></div>';return;}
   el.innerHTML=cart.map(it=>`
-    <div class="citem">
-      <div class="citemoji">${it.emoji}</div>
-      <div class="ciinfo">
-        <div class="ciname">${it.name}</div>
-        <div class="ciprice">${it.price*it.qty} RON</div>
-        <div class="ciqty">
-          <button class="qbtn" onclick="changeQty(${it.id},-1)">−</button>
-          <span class="qval">${it.qty}</span>
-          <button class="qbtn" onclick="changeQty(${it.id},1)">+</button>
-        </div>
-      </div>
-      <button class="crem" onclick="removeFromCart(${it.id})">🗑️</button>
-    </div>`).join('');
+    <div class="citem"><div class="citemoji">${it.emoji}</div>
+    <div class="ciinfo"><div class="ciname">${it.name}</div><div class="ciprice">${it.price*it.qty} RON</div>
+    <div class="ciqty"><button class="qbtn" onclick="changeQty(${it.id},-1)">−</button><span class="qval">${it.qty}</span><button class="qbtn" onclick="changeQty(${it.id},1)">+</button></div></div>
+    <button class="crem" onclick="removeFromCart(${it.id})">🗑️</button></div>`).join('');
 }
-
 function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open');}
 function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open');}
 
-/* ════════════════════════════
+/* ═══════════════════════
    CHECKOUT
-════════════════════════════ */
-function openCheckout(){
-  if(!cart.length)return;
-  closeCart();curStep=0;updateStepUI();
-  document.getElementById('chOverlay').classList.add('open');
-}
+═══════════════════════ */
+function openCheckout(){if(!cart.length)return;closeCart();curStep=0;updateStepUI();document.getElementById('chOverlay').classList.add('open');}
 function closeCheckout(){document.getElementById('chOverlay').classList.remove('open');}
-
 function chGoStep(n){
   if(n===1){
-    const ids=['g0','g1','g2','g3','g4','g5'];
-    if(ids.some(id=>!document.getElementById(id).value.trim())){showToast('⚠️ Completează toate câmpurile obligatorii!');return;}
+    if(['g0','g1','g2','g3','g4','g5'].some(id=>!document.getElementById(id).value.trim())){showToast('⚠️ Completează câmpurile obligatorii!');return;}
     if(!document.getElementById('g2').value.includes('@')){showToast('⚠️ Email invalid');return;}
     buildSummary();
   }
   curStep=n;updateStepUI();
 }
-
 function updateStepUI(){
-  for(let i=0;i<3;i++){
-    document.getElementById('chs'+i).classList.toggle('active',i===curStep);
-    const d=document.getElementById('sd'+i);
-    d.className='sdot';
-    if(i===curStep)d.classList.add('active');
-    else if(i<curStep)d.classList.add('done');
-  }
+  for(let i=0;i<3;i++){document.getElementById('chs'+i).classList.toggle('active',i===curStep);const d=document.getElementById('sd'+i);d.className='sdot';if(i===curStep)d.classList.add('active');else if(i<curStep)d.classList.add('done');}
 }
-
 function buildSummary(){
   const ship=parseInt(document.getElementById('g7').value)||0;
   const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('oSummary').innerHTML=`
-    <div class="osum-t">Rezumat comandă</div>
-    ${cart.map(i=>`<div class="oline"><span>${i.emoji} ${i.name} × ${i.qty}</span><span>${i.price*i.qty} RON</span></div>`).join('')}
-    <div class="oline"><span>Transport</span><span>${ship===0?'Gratuit':ship+' RON'}</span></div>
-    <div class="oline tot"><span>Total de plată</span><span>${sub+ship} RON</span></div>`;
+  document.getElementById('oSummary').innerHTML=`<div class="osum-t">Rezumat</div>${cart.map(i=>`<div class="oline"><span>${i.emoji} ${i.name} ×${i.qty}</span><span>${i.price*i.qty} RON</span></div>`).join('')}<div class="oline"><span>Transport</span><span>${ship===0?'Gratuit':ship+' RON'}</span></div><div class="oline tot"><span>Total</span><span>${sub+ship} RON</span></div>`;
 }
-
-function setPM(el,pm){
-  curPM=pm;
-  document.querySelectorAll('.pmopt').forEach(x=>x.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('pmCard').style.display=pm==='card'?'block':'none';
-  document.getElementById('pmRamburs').style.display=pm==='ramburs'?'block':'none';
-  document.getElementById('pmTransfer').style.display=pm==='transfer'?'block':'none';
-}
-
+function setPM(el,pm){curPM=pm;document.querySelectorAll('.pmopt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');document.getElementById('pmCard').style.display=pm==='card'?'block':'none';document.getElementById('pmRamburs').style.display=pm==='ramburs'?'block':'none';document.getElementById('pmTransfer').style.display=pm==='transfer'?'block':'none';}
 function processPayment(){
-  if(curPM==='card'){
-    const n=document.getElementById('cc1').value.replace(/\s/g,'');
-    const e=document.getElementById('cc2').value;
-    const c=document.getElementById('cc3').value;
-    const nm=document.getElementById('cc4').value;
-    if(n.length<13||e.length<4||c.length<3||!nm.trim()){showToast('⚠️ Completează datele cardului!');return;}
-  }
-  const btn=document.getElementById('payBtn');
-  btn.disabled=true; btn.textContent='⏳ Se procesează...';
-  setTimeout(()=>{
-    btn.disabled=false; btn.textContent='🔒 Plasează comanda';
-    const email=document.getElementById('g2').value;
-    const name=document.getElementById('g0').value;
-    document.getElementById('sukMsg').textContent='Mulțumim, '+name+'! Confirmarea a fost trimisă la '+email+'. Comanda va fi pregătită în 24–48h.';
-    curStep=2; updateStepUI();
-  },2000);
+  if(curPM==='card'){const n=document.getElementById('cc1').value.replace(/\s/g,'');if(n.length<13||!document.getElementById('cc2').value||!document.getElementById('cc3').value||!document.getElementById('cc4').value.trim()){showToast('⚠️ Completează datele cardului!');return;}}
+  const btn=document.getElementById('payBtn');btn.disabled=true;btn.textContent='⏳ Se procesează...';
+  setTimeout(()=>{btn.disabled=false;btn.textContent='🔒 Plasează comanda';const email=document.getElementById('g2').value;const name=document.getElementById('g0').value;document.getElementById('sukMsg').textContent='Mulțumim, '+name+'! Confirmarea a fost trimisă la '+email+'.';curStep=2;updateStepUI();},2000);
 }
-
 function fmtCard(i){i.value=i.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim().slice(0,19);}
 function fmtExp(i){let v=i.value.replace(/\D/g,'');if(v.length>=3)v=v.slice(0,2)+'/'+v.slice(2,4);i.value=v;}
 
-/* ════════════════════════════
+/* ═══════════════════════
    ADMIN
-════════════════════════════ */
+═══════════════════════ */
 function openAdmin(){
-  if(!isAdmin){ openLogin(); return; }
-  buildEmojiGrid(); buildBgPick(); buildCatSelect();
-  renderAdminList(); renderAdminCats();
+  if(!currentUser||!currentUser.isAdmin){openLoginModal();return;}
+  buildEmojiGrid();buildBgPick();buildCatSelect();renderAdminList();renderAdminCats();
   document.getElementById('adminOverlay').classList.add('open');
 }
-function closeAdmin(){
-  document.getElementById('adminOverlay').classList.remove('open');
-  renderProducts(); renderCategories();
-}
-
-function atab(tab,btn){
-  document.querySelectorAll('.atab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  ['products','add','cats'].forEach(t=>{
-    document.getElementById('tab-'+t).style.display=t===tab?'block':'none';
-  });
-}
-
+function closeAdmin(){document.getElementById('adminOverlay').classList.remove('open');renderProducts();renderCategories();}
+function atab(tab,btn){document.querySelectorAll('.atab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');['products','add','cats'].forEach(t=>{document.getElementById('tab-'+t).style.display=t===tab?'block':'none';});}
 function renderAdminList(){
   document.getElementById('adminList').innerHTML=products.map(p=>`
-    <div class="arow">
-      <div class="aemoji">${p.emoji}</div>
-      <div class="ainfo">
-        <input value="${p.name}" onchange="updP(${p.id},'name',this.value)">
-        <input class="ametainput" value="${p.meta}" onchange="updP(${p.id},'meta',this.value)">
-      </div>
-      <div class="pwrp">
-        <input type="number" value="${p.price}" onchange="updP(${p.id},'price',+this.value)" min="1">
-        <span>RON</span>
-      </div>
-      <div class="aacts">
-        <button class="ibtn" onclick="cycBadge(${p.id})" title="Badge: ${p.badge||'fără'}">🏷️</button>
-        <button class="ibtn del" onclick="delP(${p.id})" title="Șterge">🗑️</button>
-      </div>
-    </div>`).join('');
+    <div class="arow"><div class="aemoji">${p.emoji}</div>
+    <div class="ainfo"><input value="${p.name}" onchange="updP(${p.id},'name',this.value)"><input class="ametainput" value="${p.meta}" onchange="updP(${p.id},'meta',this.value)"></div>
+    <div class="pwrp"><input type="number" value="${p.price}" onchange="updP(${p.id},'price',+this.value)" min="1"><span>RON</span></div>
+    <div class="aacts"><button class="ibtn" onclick="cycBadge(${p.id})" title="Badge">🏷️</button><button class="ibtn del" onclick="delP(${p.id})">🗑️</button></div></div>`).join('');
 }
-
 function updP(id,k,v){const p=products.find(x=>x.id===id);if(p)p[k]=v;}
-function cycBadge(id){
-  const p=products.find(x=>x.id===id);if(!p)return;
-  const bs=['','NOU','TOP','PROMO'];
-  p.badge=bs[(bs.indexOf(p.badge)+1)%bs.length];
-  renderAdminList(); showToast('Badge: '+(p.badge||'Fără'));
-}
-function delP(id){
-  if(!confirm('Ștergi produsul?'))return;
-  products=products.filter(x=>x.id!==id);
-  renderAdminList(); showToast('Produs șters.');
-}
-
+function cycBadge(id){const p=products.find(x=>x.id===id);if(!p)return;const bs=['','NOU','TOP','PROMO'];p.badge=bs[(bs.indexOf(p.badge)+1)%bs.length];renderAdminList();showToast('Badge: '+(p.badge||'Fără'));}
+function delP(id){if(!confirm('Ștergi produsul?'))return;products=products.filter(x=>x.id!==id);renderAdminList();showToast('Produs șters.');}
 function renderAdminCats(){
-  document.getElementById('catAdminList').innerHTML=`
-    <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem">Redenumește sau adaugă categorii:</p>
-    ${categories.map((c,i)=>`
-      <div class="arow">
-        <div class="aemoji">${c.icon}</div>
-        <div class="ainfo"><input value="${c.name}" onchange="categories[${i}].name=this.value"></div>
-        <input value="${c.icon}" onchange="categories[${i}].icon=this.value" style="background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.4rem .7rem;width:58px;font-size:1.3rem;text-align:center;outline:none">
-      </div>`).join('')}
-    <button class="btn-o" style="margin-top:1rem;border-radius:12px" onclick="categories.push({name:'Categorie nouă',icon:'📁'});renderAdminCats()">+ Adaugă categorie</button>`;
+  document.getElementById('catAdminList').innerHTML=`<p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem">Redenumește sau adaugă categorii:</p>`+
+  categories.map((c,i)=>`<div class="arow"><div class="aemoji">${c.icon}</div><div class="ainfo"><input value="${c.name}" onchange="categories[${i}].name=this.value"></div><input value="${c.icon}" onchange="categories[${i}].icon=this.value" style="background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.4rem .7rem;width:58px;font-size:1.3rem;text-align:center;outline:none"></div>`).join('')+
+  `<button class="btn-o" style="margin-top:1rem;border-radius:12px" onclick="categories.push({name:'Categorie nouă',icon:'📁'});renderAdminCats()">+ Adaugă</button>`;
 }
-
-function buildCatSelect(){
-  document.getElementById('nCat').innerHTML=categories.map(c=>`<option>${c.name}</option>`).join('');
-}
-
-function buildEmojiGrid(){
-  document.getElementById('emojiGrid').innerHTML=EMOJIS.map(e=>`
-    <div class="eopt ${e===selE?'sel':''}" onclick="pickE(this,'${e}')">${e}</div>`).join('');
-}
+function buildCatSelect(){document.getElementById('nCat').innerHTML=categories.map(c=>`<option>${c.name}</option>`).join('');}
+function buildEmojiGrid(){document.getElementById('emojiGrid').innerHTML=EMOJIS.map(e=>`<div class="eopt ${e===selE?'sel':''}" onclick="pickE(this,'${e}')">${e}</div>`).join('');}
 function pickE(el,e){selE=e;document.querySelectorAll('.eopt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
-
-function buildBgPick(){
-  document.getElementById('bgPick').innerHTML=BGS.map(b=>`
-    <div class="bgsw ${b.c===selBg?'sel':''}" style="background:${b.col}" onclick="pickBg(this,'${b.c}')"></div>`).join('');
-}
+function buildBgPick(){document.getElementById('bgPick').innerHTML=BGS.map(b=>`<div class="bgsw ${b.c===selBg?'sel':''}" style="background:${b.col}" onclick="pickBg(this,'${b.c}')"></div>`).join('');}
 function pickBg(el,b){selBg=b;document.querySelectorAll('.bgsw').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
-
-function pickBadge(el,v){
-  selBadge=v;
-  document.querySelectorAll('.bopt').forEach(x=>x.classList.remove('sel'));
-  el.classList.add('sel');
-}
-
+function pickBadge(el,v){selBadge=v;document.querySelectorAll('.bopt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
 function addProduct(){
-  const name=document.getElementById('nName').value.trim();
-  const price=+document.getElementById('nPrice').value;
+  const name=document.getElementById('nName').value.trim();const price=+document.getElementById('nPrice').value;
   if(!name||!price){showToast('⚠️ Completează numele și prețul!');return;}
-  const meta=document.getElementById('nMeta').value.trim();
-  const cat=document.getElementById('nCat').value;
-  const stars=Math.min(5,Math.max(1,+document.getElementById('nStars').value||5));
-  const reviews=+document.getElementById('nRev').value||0;
-  products.push({id:Date.now(),name,meta,price,stars,reviews,badge:selBadge,emoji:selE,bg:selBg,cat});
-  document.getElementById('nName').value='';
-  document.getElementById('nPrice').value='';
-  document.getElementById('nMeta').value='';
+  products.push({id:Date.now(),name,meta:document.getElementById('nMeta').value.trim(),price,stars:Math.min(5,Math.max(1,+document.getElementById('nStars').value||5)),reviews:+document.getElementById('nRev').value||0,badge:selBadge,emoji:selE,bg:selBg,cat:document.getElementById('nCat').value});
+  document.getElementById('nName').value='';document.getElementById('nPrice').value='';document.getElementById('nMeta').value='';
   showToast('✓ "'+name+'" adăugat!');
-  const firstTab=document.querySelectorAll('.atab')[0];
-  atab('products',firstTab);
-  renderAdminList();
+  atab('products',document.querySelectorAll('.atab')[0]);renderAdminList();
 }
 
-/* ════════════════════════════
+/* ═══════════════════════
    UTILS
-════════════════════════════ */
+═══════════════════════ */
 function goTo(s){document.querySelector(s)?.scrollIntoView({behavior:'smooth'});}
 function toggleMNav(){document.getElementById('mNav').classList.toggle('open');}
 function closeMNav(){document.getElementById('mNav').classList.remove('open');}
 function submitContact(){showToast('✓ Mesajul a fost trimis! Te contactăm în curând.');}
-
 let toastT;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);}
+function scrollReveal(){
+  const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:.08});
+  document.querySelectorAll('.pc,.cat-card,.perk').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(28px)';el.style.transition='opacity .55s ease,transform .55s ease';obs.observe(el);});
 }
 
-function scrollReveal(){
-  const obs=new IntersectionObserver(en=>{
-    en.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
-  },{threshold:.08});
-  document.querySelectorAll('.pc,.cat-card,.perk').forEach(el=>{
-    el.style.opacit
+/* INIT */
+renderProducts();renderCategories();updateCart();loadSession();
+</script>
+</body>
+</html>
