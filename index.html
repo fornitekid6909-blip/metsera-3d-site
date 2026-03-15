@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -331,8 +332,51 @@ footer p{font-size:.75rem;color:var(--mut)}
 .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
 .bg1{background:linear-gradient(135deg,#1a1230,#0e0e1a)}.bg2{background:linear-gradient(135deg,#12201a,#0a0f0e)}.bg3{background:linear-gradient(135deg,#1a1208,#0f0e0a)}.bg4{background:linear-gradient(135deg,#1a0f12,#0f0a0a)}.bg5{background:linear-gradient(135deg,#0f1a1a,#0a0e0f)}.bg6{background:linear-gradient(135deg,#1a1218,#0f0a0f)}
 @media(max-width:900px){.nl{display:none}.hbg{display:flex}.cong{grid-template-columns:1fr;gap:1.9rem}.pg{grid-template-columns:repeat(2,1fr);gap:.9rem}.catg{grid-template-columns:repeat(3,1fr)}.pk{grid-template-columns:repeat(2,1fr)}.play{grid-template-columns:1fr;gap:1.4rem;padding:1.9rem 5%}.fr{grid-template-columns:1fr 1fr}.acig{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){nav{padding:.8rem 4%}.btn-li,.btn-ac,.btn-adm{font-size:.73rem;padding:.38rem .7rem}.btn-cr{padding:.38rem .72rem;font-size:.77rem}section{padding:3.3rem 4%}.hero{padding:6.2rem 4% 3.3rem;min-height:auto}h1{font-size:clamp(2.1rem,9vw,2.9rem)}.hs{font-size:.93rem;margin:1rem 0 1.75rem}.ha{flex-direction:column;gap:.65rem}.ha .bp,.ha .bo{width:100%;justify-content:center}.hst{gap:1.4rem;margin-top:2.3rem}.sn{font-size:1.55rem}.catg{grid-template-columns:repeat(2,1fr);gap:.65rem}.pg{grid-template-columns:1fr;gap:.9rem}.pk{grid-template-columns:1fr}footer{flex-direction:column;text-align:center;padding:1.9rem 4%}.fli{justify-content:center;gap:.9rem}.cdr{width:100vw}.cho{padding:0;align-items:flex-end}.chm{border-radius:18px 18px 0 0;max-height:94vh;width:100%}.chbd{padding:1.1rem 1.4rem}.ch2{grid-template-columns:1fr}.chn{flex-direction:column}.chn .bp,.chn .bo{flex:none;width:100%;justify-content:center;border-radius:11px}.ov{padding:0;align-items:flex-end}.md,.acp{border-radius:18px 18px 0 0;max-height:91vh;width:100%;overflow-y:auto}.mb,.acb{padding:1.1rem 1.4rem 1.9rem}.ao{padding:.45rem}.ap{border-radius:15px;max-height:94vh}.apb{padding:1.1rem}.at{font-size:.73rem;padding:.38rem .75rem}.play{padding:1.4rem 4%}.fr{grid-template-columns:1fr}.acig{grid-template-columns:1fr}.toast{width:88%;bottom:1.1rem}}
-@media(max-width:400px){h1{font-size:1.95rem}.hst{flex-direction:column;gap:.75rem}.catg{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+  nav{padding:.75rem 4%}
+  .btn-li,.btn-ac,.btn-adm,.btn-lo{display:none!important}
+  .btn-cr{padding:.45rem .85rem;font-size:.82rem}
+  .nr{gap:.5rem}
+  .hbg{display:flex;padding:.5rem;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+  .hbg span{width:23px;height:2.5px}
+  .mnav{top:60px}
+  section{padding:3.3rem 4%}
+  .hero{padding:6rem 4% 3.5rem;min-height:auto}
+  h1{font-size:clamp(2rem,8.5vw,2.8rem);line-height:1.1}
+  .hs{font-size:.95rem;margin:1rem 0 1.75rem}
+  .ha{flex-direction:column;gap:.7rem}
+  .ha .bp,.ha .bo{width:100%;justify-content:center;padding:.9rem 1.5rem}
+  .hst{gap:1.5rem;margin-top:2.5rem}
+  .sn{font-size:1.6rem}
+  .catg{grid-template-columns:repeat(2,1fr);gap:.65rem}
+  .pg{grid-template-columns:1fr;gap:.9rem}
+  .pk{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:1.9rem 4%}
+  .fli{justify-content:center;gap:.9rem}
+  .cdr{width:100vw}
+  .cho{padding:0;align-items:flex-end}
+  .chm{border-radius:18px 18px 0 0;max-height:94vh;width:100%}
+  .chbd{padding:1.1rem 1.4rem}
+  .ch2{grid-template-columns:1fr}
+  .chn{flex-direction:column}
+  .chn .bp,.chn .bo{flex:none;width:100%;justify-content:center;border-radius:11px}
+  .ov{padding:0;align-items:flex-end}
+  .md,.acp{border-radius:18px 18px 0 0;max-height:91vh;width:100%;overflow-y:auto}
+  .mb,.acb{padding:1.1rem 1.4rem 1.9rem}
+  .ao{padding:.45rem}
+  .ap{border-radius:15px;max-height:94vh}
+  .apb{padding:1.1rem}
+  .at{font-size:.73rem;padding:.38rem .75rem}
+  .play{padding:1.4rem 4%}
+  .fr{grid-template-columns:1fr}
+  .acig{grid-template-columns:1fr}
+  .toast{width:90%;bottom:1.2rem;font-size:.82rem}
+}
+@media(max-width:400px){
+  h1{font-size:1.9rem}
+  .hst{flex-direction:column;gap:.75rem}
+  .catg{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -348,7 +392,13 @@ footer p{font-size:.75rem;color:var(--mut)}
     <button class="hbg" onclick="toggleMnav()"><span></span><span></span><span></span></button>
   </div>
 </nav>
-<div class="mnav" id="mnav"><a href="#produse" onclick="closeMnav();closeProd()">Produse</a><a href="#categorii" onclick="closeMnav();closeProd()">Categorii</a><a href="#avantaje" onclick="closeMnav();closeProd()">De ce noi?</a><a href="#contact" onclick="closeMnav();closeProd()">Contact</a></div>
+<div class="mnav" id="mnav">
+  <a href="#produse" onclick="closeMnav();closeProd()">Produse</a>
+  <a href="#categorii" onclick="closeMnav();closeProd()">Categorii</a>
+  <a href="#avantaje" onclick="closeMnav();closeProd()">De ce noi?</a>
+  <a href="#contact" onclick="closeMnav();closeProd()">Contact</a>
+  <div id="mnavAuth" style="padding-top:.4rem;display:flex;flex-direction:column;gap:.7rem"></div>
+</div>
 <section class="hero">
   <div class="hgrid"></div><div class="hg1"></div><div class="hg2"></div>
   <div class="hcon">
@@ -367,7 +417,7 @@ footer p{font-size:.75rem;color:var(--mut)}
   <div class="sh"><div class="stag">Hai să vorbim</div><h2>Contactează-ne</h2><p class="sd">Întrebare sau comandă specială? Suntem disponibili!</p></div>
   <div class="cong">
     <div>
-      <a href="mailto:theoladunca@gmail.com" class="coni"><div class="conico">📧</div><div><div class="conl">Email</div><div class="conv">theoladunca@gmail.com</div></div></a>
+      <a href="/cdn-cgi/l/email-protection#44302c212b282520312a2725042329252d286a272b29" class="coni"><div class="conico">📧</div><div><div class="conl">Email</div><div class="conv"><span class="__cf_email__" data-cfemail="b7c3dfd2d8dbd6d3c2d9d4d6f7d0dad6dedb99d4d8da">[email&#160;protected]</span></div></div></a>
       <a href="tel:+40768181272" class="coni"><div class="conico">📞</div><div><div class="conl">Telefon / WhatsApp</div><div class="conv">0768 181 272</div></div></a>
       <a href="tel:+40720992949" class="coni"><div class="conico">📱</div><div><div class="conl">Telefon alternativ</div><div class="conv">0720 992 949</div></div></a>
       <div class="coni"><div class="conico">📍</div><div><div class="conl">Locație</div><div class="conv">Focșani, Vrancea, România</div></div></div>
@@ -407,7 +457,7 @@ footer p{font-size:.75rem;color:var(--mut)}
 <!-- CHECKOUT -->
 <div class="cho" id="cho"><div class="chm"><div class="chh"><h3>💳 Finalizare comandă</h3><button class="xb" onclick="closeChk()">✕</button></div><div class="chbd"><div class="dots"><div class="dot on" id="d0"></div><div class="dsep"></div><div class="dot" id="d1"></div><div class="dsep"></div><div class="dot" id="d2"></div></div><div class="chst on" id="cs0"><div class="chl">📦 Date de livrare</div><div class="ch2"><div class="chf"><label>Prenume *</label><input type="text" id="g0" placeholder="Ion"></div><div class="chf"><label>Nume *</label><input type="text" id="g1" placeholder="Popescu"></div></div><div class="chf"><label>Email *</label><input type="email" id="g2" placeholder="ion@email.com"></div><div class="chf"><label>Telefon *</label><input type="tel" id="g3" placeholder="+40 7XX XXX XXX"></div><div class="chf"><label>Adresa *</label><input type="text" id="g4" placeholder="Str. Exemplu nr. 1"></div><div class="ch2"><div class="chf"><label>Oraș *</label><input type="text" id="g5" placeholder="Focșani"></div><div class="chf"><label>Județ</label><input type="text" id="g6" placeholder="Vrancea"></div></div><div class="chf"><label>Livrare</label><select id="g7"><option value="15">Curier standard (2–3 zile) — 15 RON</option><option value="25">Curier express (24h) — 25 RON</option><option value="0">Ridicare din atelier — Gratuit</option></select></div><div class="chn"><button class="bo" onclick="closeChk()">← Înapoi</button><button class="bp" onclick="chStep(1)">Continuă →</button></div></div><div class="chst" id="cs1"><div id="osum" class="osu"></div><div class="chl">💳 Metodă de plată</div><div class="pmr"><div class="pmo on" onclick="setPM(this,'card')">💳 Card</div><div class="pmo" onclick="setPM(this,'ram')">💵 Ramburs</div><div class="pmo" onclick="setPM(this,'tr')">🏦 Transfer</div></div><div id="pmCard"><div class="ib2">🔒 <strong>Plată securizată Stripe</strong> — Visa, Mastercard, Amex.</div><div class="chf"><label>Număr card</label><input type="text" id="cc1" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtC(this)"></div><div class="ch2"><div class="chf"><label>Expiră</label><input type="text" id="cc2" placeholder="12/26" maxlength="5" oninput="fmtE(this)"></div><div class="chf"><label>CVV</label><input type="text" id="cc3" placeholder="123" maxlength="4"></div></div><div class="chf"><label>Nume pe card</label><input type="text" id="cc4" placeholder="ION POPESCU"></div></div><div id="pmRam" style="display:none"><div class="ib2">💵 <strong>Ramburs la livrare</strong> — Plătești la sosirea coletului.</div></div><div id="pmTr" style="display:none"><div class="ib2">🏦 <strong>Transfer bancar</strong> — Datele contului pe email după comandă.</div></div><div class="chn"><button class="bo" onclick="chStep(0)">← Înapoi</button><button class="bp" id="payB" onclick="procPay()">🔒 Plasează comanda</button></div></div><div class="chst" id="cs2"><div class="suk"><div class="suki">🎉</div><h3>Comandă plasată!</h3><p id="sukMsg">Vei primi confirmarea pe email.</p><button class="bp" style="border:none;margin:0 auto" onclick="closeChk();clearCart()">← Înapoi la magazin</button></div></div></div></div></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const ADMIN_EMAIL='theoladunca@gmail.com';
 const ADMIN_HASH='7c98ffaa5719ad5f08c443a8736be7c1fcdf3d809c7e07959fba7e4cb3f6fb9b';
 const SK='m3d_s';
@@ -548,7 +598,16 @@ function renderIup(){gl('iup').innerHTML=newImgs.map((s,i)=>`<div class="iupi"><
 async function addProd(){const nm=gl('nNm').value.trim(),pr=+gl('nPr').value;if(!nm||!pr){showToast('⚠️ Completează numele și prețul!');return;}prods.push({id:Date.now(),name:nm,meta:gl('nMe').value.trim(),price:pr,stars:Math.min(5,Math.max(1,+gl('nSt').value||5)),reviews:[],badge:selBadge,images:[...newImgs],emoji:'📦',bg:'bg1',cat:gl('nCa').value});gl('nNm').value='';gl('nPr').value='';gl('nMe').value='';newImgs=[];renderIup();await saveProd();atab('pr',document.querySelectorAll('.at')[0]);renderAdminList();}
 function sendContact(e){e.preventDefault();const btn=gl('cBtn');btn.disabled=true;btn.textContent='⏳ Se trimite...';fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()}).then(()=>{btn.disabled=false;btn.textContent='Trimite mesajul →';e.target.reset();showToast('✅ Mesajul a fost trimis!');}).catch(()=>{btn.disabled=false;btn.textContent='Trimite mesajul →';e.target.reset();showToast('✅ Mesajul a fost trimis!');});}
 function goTo(s){document.querySelector(s)?.scrollIntoView({behavior:'smooth'});}
-function toggleMnav(){gl('mnav').classList.toggle('open');}
+function toggleMnav(){
+  gl('mnav').classList.toggle('open');
+  // Update auth links in mobile menu
+  const ma = gl('mnavAuth');
+  if(ma){
+    if(!CU) ma.innerHTML='<a href="#" onclick="closeMnav();openLogin()" style="color:var(--acc);border-top:1px solid var(--bor);padding-top:.7rem">👤 Login / Cont nou</a>';
+    else if(CU.isAdmin) ma.innerHTML='<a href="#" onclick="closeMnav();openAdmin()" style="color:#a89fff;border-top:1px solid var(--bor);padding-top:.7rem">⚙️ Admin</a><a href="#" onclick="closeMnav();doLogout()" style="color:#fc8181">↩ Ieși din cont</a>';
+    else ma.innerHTML='<a href="#" onclick="closeMnav();openAcc()" style="color:var(--acc);border-top:1px solid var(--bor);padding-top:.7rem">👤 '+CU.name.split(" ")[0]+'</a><a href="#" onclick="closeMnav();doLogout()" style="color:#fc8181">↩ Ieși din cont</a>';
+  }
+}
 function closeMnav(){gl('mnav').classList.remove('open');}
 let toastT;
 function showToast(msg){const t=gl('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),3500);}
